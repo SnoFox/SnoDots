@@ -1,0 +1,7 @@
+alias cp='nocorrect cp'
+alias ls="ls --color=always"
+alias mv='nocorrect mv'
+alias rm='nocorrect rm -rI'
+alias mkdir='nocorrect mkdir'
+alias :q='exit'
+alias :wq='exit'
