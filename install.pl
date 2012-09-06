@@ -80,13 +80,13 @@ if ($contained) {
 	($prefix) = $prefix =~ m{^\/? (.+) [^/]+ $}x;
 }
 
-#chomp(my $uname = `uname -s`);
-#`cc answerback.c -o answerback.$uname`;
-#if ($? != 0) {
-#	warn "Could not compile answerback.\n";
-#} else {
-#	$links{"answerback.$uname"} = "bin/answerback.$uname";
-#}
+chomp(my $uname = `uname -s`);
+`cc answerback.c -o answerback.$uname`;
+if ($? != 0) {
+	warn "Could not compile answerback.\n";
+} else {
+	$links{"answerback.$uname"} = "bin/answerback.$uname";
+}
 
 
 my $i = 0; # Keep track of how many links we added
