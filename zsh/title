@@ -1,6 +1,7 @@
 # terminal titles
 precmd()
 {
+	updateprompt
 	local termtitle
 
 	termtitle=`print -P "%n@%m[%l]"`
