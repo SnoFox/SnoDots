@@ -8,7 +8,7 @@ use strict;
 # using minimal requirements (perl, tar, gzip, and (curl or wget))
 
 # URL of this repo in gitweb
-my $URL = 'http://majnematic.com/cgi-bin/gitweb.cgi?p=davesdots.git';
+my $URL = 'https://github.com/SnoFox/SnoDots.git';
 
 my $html  = http_fetch($URL);
 my($hash) = $html =~ m{
