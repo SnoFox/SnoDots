@@ -1,0 +1,101 @@
+#! /bin/sh
+# colors
+for dircolors in gdircolors dircolors ; do
+	if command -v $dircolors >/dev/null 2>&1 ; then
+		dircolor_text=''
+		if [ -f "${HOME}/.dir_colors" ] ; then
+			dircolor_text=`cat "${HOME}/.dir_colors"`
+		elif [ -f /etc/DIR_COLORS ] ; then
+			dircolor_text=`cat /etc/DIR_COLORS`
+		fi
+
+		if $dircolors --version 2>/dev/null | grep GNU >/dev/null 2>&1 ; then
+			dircolor_text="${dircolor_text}\nSTICKY_OTHER_WRITABLE 01;04;34;40"
+			dircolor_text="${dircolor_text}\nOTHER_WRITABLE 01;34;40"
+		fi
+
+		eval `echo "${dircolor_text}" | $dircolors -b -`
+		break
+	fi
+done
+
+# gimmie an editor, make it a nice vi clone
+for EDITOR in vimx vim elvis vile nvi vi ; do
+	command -v $EDITOR >/dev/null 2>&1 && break
+done
+export EDITOR
+
+# make the history editor the editor we want
+FCEDIT=$EDITOR
+export FCEDIT
+
+# vimx -> vim
+if [ "${EDITOR}" = vimx ] ; then
+	alias vim=vimx
+fi
+
+# aliases
+alias cd..='cd ..'
+
+# handles per OS aliases, fixes a few terms
+case `uname -s` in
+	Linux|CYGWIN*)
+		alias ls="ls -h --color=auto"
+		alias grep='grep -d skip --color=auto'
+	;;
+	FreeBSD|Darwin|DragonFly)
+		if command -v top >/dev/null 2>&1 ; then
+			alias top="top -o cpu"
+		fi
+
+		if command -v gls >/dev/null 2>&1 ; then
+			alias ls="gls -h --color=auto"
+		elif ls --version 2>/dev/null | grep GNU >/dev/null 2>&1 ; then
+			alias ls="ls -h --color=auto"
+		else
+			LSCOLORS="ExGxFxDxCxDxDxHbaDEaEa"
+			export LSCOLORS
+			alias ls="ls -Gh"
+		fi
+		alias grep='grep -d skip --color=auto'
+	;;
+	Interix)
+		alias ls="ls --color"
+	;;
+	SunOS)
+		if command -v gls >/dev/null 2>&1 ; then
+			alias ls="gls -h --color=auto"
+		elif ls --version 2>/dev/null | grep GNU >/dev/null 2>&1 ; then
+			alias ls="ls -h --color=auto"
+		else
+			alias ls="ls -h"
+		fi
+
+		if command -v ggrep >/dev/null 2>&1 ; then
+			alias grep='ggrep -d skip --color=auto'
+		elif grep --version 2>/dev/null | grep GNU >/dev/null 2>&1 ; then
+			alias grep='grep -d skip --color=auto'
+		fi
+
+		for locate in glocate slocate ; do
+			command -v $locate >/dev/null 2>&1 && alias locate=$locate
+		done
+	;;
+esac
+
+if command -v gobjdump >/dev/null 2>&1 ; then
+	alias objdump=gobjdump
+fi
+
+if command -v ack-grep >/dev/null 2>&1 ; then
+	alias ack=ack-grep
+fi
+
+alias rm='rm -ir'
+
+alias df='df -h'
+alias du='du -h'
+
+alias ping='ping -c4'
+
+command -v time >/dev/null 2>&1 && alias time='command time'

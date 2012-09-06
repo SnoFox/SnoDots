@@ -38,19 +38,14 @@ unless(eval {symlink('', ''); 1;}) {
 
 my %links = (
 	screenrc   => '.screenrc',
-	ackrc      => '.ackrc',
 	toprc      => '.toprc',
 	dir_colors => '.dir_colors',
 	lessfilter => '.lessfilter',
 
 	vim      => '.vim',
 	vimrc    => '.vimrc',
-	_vimrc   => '_vimrc',
-	gvimrc   => '.gvimrc',
 
 	commonsh => '.commonsh',
-
-	inputrc  => '.inputrc',
 
 	bash          => '.bash',
 	bashrc        => '.bashrc',
@@ -65,25 +60,15 @@ my %links = (
 
 	shinit  => '.shinit',
 
-	Xdefaults  => '.Xdefaults',
-	Xresources => '.Xresources',
-
-	'uncrustify.cfg' => '.uncrustify.cfg',
-	'indent.pro'     => '.indent.pro',
-
-	xmobarrc    => '.xmobarrc',
-	'xmonad.hs' => '.xmonad/xmonad.hs',
-
 	gitconfig => '.gitconfig',
 	gitignore => '.gitignore',
 
-	tigrc     => '.tigrc',
+	conkyrc => '.conkyrc',
 
-	caffeinate => 'bin/caffeinate',
-	lock       => 'bin/lock',
+#	lock       => 'bin/lock',
 
-	'git-info'            => 'bin/git-info',
-	'git-untrack-ignored' => 'bin/git-untracked-ignored',
+#	'git-info'            => 'bin/git-info',
+#	'git-untrack-ignored' => 'bin/git-untracked-ignored',
 
 	gdbinit => '.gdbinit',
 );
@@ -95,13 +80,13 @@ if ($contained) {
 	($prefix) = $prefix =~ m{^\/? (.+) [^/]+ $}x;
 }
 
-chomp(my $uname = `uname -s`);
-`cc answerback.c -o answerback.$uname`;
-if ($? != 0) {
-	warn "Could not compile answerback.\n";
-} else {
-	$links{"answerback.$uname"} = "bin/answerback.$uname";
-}
+#chomp(my $uname = `uname -s`);
+#`cc answerback.c -o answerback.$uname`;
+#if ($? != 0) {
+#	warn "Could not compile answerback.\n";
+#} else {
+#	$links{"answerback.$uname"} = "bin/answerback.$uname";
+#}
 
 
 my $i = 0; # Keep track of how many links we added

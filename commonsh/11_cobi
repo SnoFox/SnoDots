@@ -1,0 +1,3 @@
+#! /bin/sh
+alias kadmin="kadmin -k -t /home/cobi/.kts/cobi-autoadmin.keytab -p cobi_autoadmin/admin@CLUENET.ORG"
+alias releng="ssh -x -q -t -i ~/Giftiki/keys/releng.pem releng@admin.releng.giftiki.com releng"
