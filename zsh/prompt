@@ -161,11 +161,9 @@ function updateprompt () {
 		local stats="$(git_prompt_status)"
 		PROMPT=${RESETCOLOR}${HOSTCOLOR}$'%n@'${LHOSTNAME}${BLACKCOLOR}':'${PATHCOLOR}"${reponame} ${RED}${branch}${YELLOW}${stats}${BLACKCOLOR}${additional} ${PATHCOLOR}"$'%45<...<'"${repopath}"' %(?..'${BOLDERRORCOLOR}$')%(!.#.$) '${RESETCOLOR}
 		RPROMPT=${RESETCOLOR}${stashpart}${remotepart}$'%1(j.'${JOBCOLOR}$'[%j].)%(?..'${ERRORCOLOR}$'[%?])'${CLOCKCOLOR}$'[%t]'${RESETCOLOR}
-		cdpath=( . "$repodir" ~ ~/Giftikigit )
 	else
 		PROMPT=${RESETCOLOR}${HOSTCOLOR}$'%n@'${LHOSTNAME}${BLACKCOLOR}':'${PATHCOLOR}$'%45<...<%~ %(?..'${BOLDERRORCOLOR}$')%(!.#.$) '${RESETCOLOR}
 		RPROMPT=${RESETCOLOR}$'%1(j.'${JOBCOLOR}$'[%j].)%(?..'${ERRORCOLOR}$'[%?])'${CLOCKCOLOR}$'[%t]'${RESETCOLOR}
-		cdpath=( . ~ ~/Giftikigit )
 	fi
 }
 updateprompt
