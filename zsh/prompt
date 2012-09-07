@@ -159,10 +159,11 @@ function updateprompt () {
 			stashpart="${RESETCOLOR}${GRAY}(${GREEN}${stashes}${GRAY} stashed)${RESETCOLOR}"
 		fi
 		local stats="$(git_prompt_status)"
-		PROMPT=${RESETCOLOR}${HOSTCOLOR}$'%n@'${LHOSTNAME}${BLACKCOLOR}':'${PATHCOLOR}"${reponame} ${RED}${branch}${YELLOW}${stats}${BLACKCOLOR}${additional} ${PATHCOLOR}"$'%45<...<'"${repopath}"' %(?..'${BOLDERRORCOLOR}$')%(!.#.$) '${RESETCOLOR}
+		PROMPT=${RESETCOLOR}'[%n@%m '"${reponame} ${branch}${YELLOW}${stats}${additional} ${RESETCOLOR}"$'%45<...<'"${repopath}"']%(?..'${BOLDERRORCOLOR}$')%(!.#.$) '
+
 		RPROMPT=${RESETCOLOR}${stashpart}${remotepart}$'%1(j.'${JOBCOLOR}$'[%j].)%(?..'${ERRORCOLOR}$'[%?])'${CLOCKCOLOR}$'[%t]'${RESETCOLOR}
 	else
-		PROMPT=${RESETCOLOR}${HOSTCOLOR}$'%n@'${LHOSTNAME}${BLACKCOLOR}':'${PATHCOLOR}$'%45<...<%~ %(?..'${BOLDERRORCOLOR}$')%(!.#.$) '${RESETCOLOR}
+		PROMPT=${RESETCOLOR}'[%n@%m %45<...<%~%(?..)]%(?..'${BOLDERRORCOLOR}$')%(!.#.$) '
 		RPROMPT=${RESETCOLOR}$'%1(j.'${JOBCOLOR}$'[%j].)%(?..'${ERRORCOLOR}$'[%?])'${CLOCKCOLOR}$'[%t]'${RESETCOLOR}
 	fi
 }
