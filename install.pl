@@ -71,6 +71,7 @@ my %links = (
 #	'git-untrack-ignored' => 'bin/git-untracked-ignored',
 
 	gdbinit => '.gdbinit',
+	ssh		=> '.ssh',
 );
 
 my $contained = (substr $scriptdir, 0, length($home)) eq $home;
