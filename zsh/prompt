@@ -159,7 +159,7 @@ function updateprompt () {
 			stashpart="${RESETCOLOR}${GRAY}(${GREEN}${stashes}${GRAY} stashed)${RESETCOLOR}"
 		fi
 		local stats="$(git_prompt_status)"
-		PROMPT=${RESETCOLOR}'[%n@%m '"${reponame} ${branch}${YELLOW}${stats}${additional} ${RESETCOLOR}"$'%45<...<'"${repopath}"']%(?..'${BOLDERRORCOLOR}$')%(!.#.$) '
+		PROMPT=${RESETCOLOR}'[%n@%m '"${reponame} ${branch}${YELLOW}${stats}${additional} ${RESETCOLOR}"$'%45<...<'"${repopath}"']%(?..'${BOLDERRORCOLOR}$')%(!.#.$) '${RESETCOLOR}
 
 		RPROMPT=${RESETCOLOR}${stashpart}${remotepart}$'%1(j.'${JOBCOLOR}$'[%j].)%(?..'${ERRORCOLOR}$'[%?])'${CLOCKCOLOR}$'[%t]'${RESETCOLOR}
 	else
