@@ -62,6 +62,7 @@ my %links = (
 
 	gitconfig => '.gitconfig',
 	gitignore => '.gitignore',
+	githelpers => '.githelpers',
 
 	conkyrc => '.conkyrc',
 
