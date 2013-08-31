@@ -17,7 +17,7 @@ draw_borders no
 draw_graph_borders yes
 default_color white
 default_shade_color white
-alignment top_left
+alignment top_right
 gap_x 12
 gap_y 35
 no_buffers yes
