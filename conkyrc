@@ -18,8 +18,11 @@ draw_graph_borders yes
 default_color white
 default_shade_color white
 alignment top_left
-gap_x 12
-gap_y 35
+#gap_x 1690
+gap_x 1930
+#gap_x 20
+gap_y 20
+#gap_x 12
 no_buffers yes
 cpu_avg_samples 2
 override_utf8_locale no
@@ -37,9 +40,16 @@ $hr
 
 Up: ${format_time ${uptime} "(\ww )(\dd )(\hh )\mm"} ${alignr}Load: ${loadavg}
 Core1: ${cpu cpu1}% ${alignr} Core2: ${cpu cpu2}%
+#Core3: ${cpu cpu3}% ${alignr} Core4: ${cpu cpu4}%
+#Core5: ${cpu cpu5}% ${alignr} Core6: ${cpu cpu6}%
+#Core7: ${cpu cpu7}% ${alignr} Core8: ${cpu cpu8}%
 ${alignc}@ ${freq_g} GHz
 ${cpugraph cpu1 20,105} ${alignr}${cpugraph cpu2 20,105}
+#${cpugraph cpu3 20,105} ${alignr}${cpugraph cpu4 20,105}
+#${cpugraph cpu5 20,105} ${alignr}${cpugraph cpu6 20,105}
+#${cpugraph cpu7 20,105} ${alignr}${cpugraph cpu8 20,105}
 Temp: ${alignr}${acpitemp}F
+GPU : ${alignr}${exec nvidia-settings -q gpucoretemp|head -n2|tail -n1|awk '{print $4}'|sed s/\\.//}C
 Processes: $alignr $processes
 Battery: $alignr ${battery_percent}%
 $battery_bar
