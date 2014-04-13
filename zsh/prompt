@@ -4,6 +4,10 @@ HOSTCOLOR=''
 PATHCOLOR=''
 BOLDERRORCOLOR=''
 BLACKCOLOR=''
+ISMACOSX=1
+if [ `uname -s` = Darwin ]; then
+	ISMACOSX=0
+fi
 
 case "${TERM}" in
 	*256color*)
@@ -101,7 +105,12 @@ git_prompt_status() {
 }
 function updateprompt () {
 	if havegit ; then
-		local gitdir="$(readlink -m $(git rev-parse --git-dir 2>/dev/null))"
+		local gitdir=""
+		if [ $ISMACOSX -eq 1 ]; then
+			gitdir="$(readlink -m $(git rev-parse --git-dir 2>/dev/null))"
+		else
+			gitdir="$(python -c 'import os,sys;print os.path.realpath(sys.argv[1])' $(git rev-parse --git-dir 2>/dev/null))"
+		fi
 		local repodir="$(dirname "${gitdir}")"
 		local reponame="$(basename "${repodir}")"
 		local curdir="$(pwd)"
@@ -143,19 +152,19 @@ function updateprompt () {
 		if [[ -n ${remote} ]] ; then
 			# for git prior to 1.7
 			# ahead=$(git rev-list origin/${hook_com[branch]}..HEAD | wc -l)
-			local ahead=$(git rev-list ${branch}@{upstream}..HEAD 2>/dev/null | wc -l)
+			local ahead=$(git rev-list ${branch}@{upstream}..HEAD 2>/dev/null | wc -l | xargs)
 			gitstatus+=( "${GREEN}+${ahead}${GRAY}" )
 
 			# for git prior to 1.7
 			# behind=$(git rev-list HEAD..origin/${hook_com[branch]} | wc -l)
-			local behind=$(git rev-list HEAD..${branch}@{upstream} 2>/dev/null | wc -l)
+			local behind=$(git rev-list HEAD..${branch}@{upstream} 2>/dev/null | wc -l | xargs)
 			gitstatus+=( "${RED}-${behind}${GRAY}" )
 
 			remotepart="${RESETCOLOR}${GRAY}[${remote} ${(j:/:)gitstatus}]${RESETCOLOR}"
 		fi
 		local stashpart=""
 		if [[ -s ${gitdir}/refs/stash ]] ; then
-			stashes=$(git stash list 2>/dev/null | wc -l)
+			stashes=$(git stash list 2>/dev/null | wc -l | xargs)
 			stashpart="${RESETCOLOR}${GRAY}(${GREEN}${stashes}${GRAY} stashed)${RESETCOLOR}"
 		fi
 		local stats="$(git_prompt_status)"

@@ -27,13 +27,14 @@ defbce on
 
 # turn on utf8
 defutf8 on
+defencoding UTF-8
 
 # changes from the default binding " to `windowlist -b', so we don't create
 # a new empty window
 bind \" windowlist
 
 # includes window title name in activity/bell messages
-activity "Activity in window %n (%t)"
+#activity "Activity in window %n (%t)"
 bell_msg "Bell in window %n (%t)"
 
 # Argh, choosing a hardstatus line is difficult
@@ -47,7 +48,7 @@ bell_msg "Bell in window %n (%t)"
 # Normal text, underlined bold current window
 #hardstatus alwayslastline "%{= dd}%-w%50>%{=ub}%n %t%?(%u)%?%{-}%+w%<"
 # Blue background, white text, underlined bold current window
-hardstatus alwayslastline "%{= bw}%-w%50>%{=ub dd}%n %t%?(%u)%?%{-}%+w%<"
+#hardstatus alwayslastline "%{= bw}%-w%50>%{=ub dd}%n %t%?(%u)%?%{-}%+w%<"
 
 startup_message off
 
