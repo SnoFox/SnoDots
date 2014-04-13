@@ -6,6 +6,7 @@
 case `uname -s` in
 	Darwin)
 		export LHOSTNAME=`scutil --get LocalHostName`
+		export PATH=/usr/local/sbin:${PATH}
 	;;
 	*)
 		export LHOSTNAME=${HOST}
