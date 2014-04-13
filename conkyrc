@@ -17,18 +17,12 @@ draw_borders no
 draw_graph_borders yes
 default_color white
 default_shade_color white
-<<<<<<< HEAD
 alignment top_left
 #gap_x 1690
 gap_x 1930
 #gap_x 20
 gap_y 20
 #gap_x 12
-=======
-alignment top_right
-gap_x 12
-gap_y 35
->>>>>>> e46f8d6789bdb1860e8a5450eec67c8838eae4b7
 no_buffers yes
 cpu_avg_samples 2
 override_utf8_locale no
