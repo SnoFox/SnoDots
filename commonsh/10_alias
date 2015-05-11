@@ -97,5 +97,6 @@ alias df='df -h'
 alias du='du -h'
 
 alias ping='ping -c4'
+alias ping6='ping6 -c4'
 
 command -v time >/dev/null 2>&1 && alias time='command time'
