@@ -48,7 +48,7 @@ bell_msg "Bell in window %n (%t)"
 # Normal text, underlined bold current window
 #hardstatus alwayslastline "%{= dd}%-w%50>%{=ub}%n %t%?(%u)%?%{-}%+w%<"
 # Blue background, white text, underlined bold current window
-#hardstatus alwayslastline "%{= bw}%-w%50>%{=ub dd}%n %t%?(%u)%?%{-}%+w%<"
+hardstatus alwayslastline "%{= bw}%-w%50>%{=ub dd}%n %t%?(%u)%?%{-}%+w%<"
 
 startup_message off
 
