@@ -1,0 +1,5 @@
+# SnoDots props v1
+#depends=commonsh
+package=zsh
+place=zsh ${HOME}/.zsh
+place=zshrc ${HOME}/.zshrc
