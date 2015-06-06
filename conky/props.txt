@@ -1,0 +1,3 @@
+# SnoDots properties
+package=conky
+place=conkyrc ${HOME}/.conkyrc
