@@ -23,6 +23,7 @@ packs[okta-zsh]=""
 # Code #
 ########
 
+# Boring, house-keeping stuff
 loglevel=1
 dotsgone=false
 
@@ -51,6 +52,7 @@ function log() {
 	fi
 }
 
+# Slightly more interesting
 function clear_dots() {
 	if [ $dotsgone = "true" ]; then
 		return
@@ -69,20 +71,19 @@ WARN
 function command_append() {
 	# $1 - source file; $2 - dest to append
 	log 2 "Appending data from $1 to $2"
-	cat ${HOME}/.dots/$1 >> $2
+	cat ${HOME}/.dots/$1 >> $( eval echo $2 )
 }
 
 function command_place() {
 	# $1 - source; $2 - destination
 	if [ -h $2 ]; then
 		rm $2
-		return 1
 	elif [ -e $2 ]; then
 		echo "Skipping placement of $2; file already exists"
 		return 1
 	fi
 	log 2 "Linking $1 at $2..."
-	ln -s ${HOME}/.dots/$1 $2
+	echo ln -s ${HOME}/.dots/$1 $( eval echo $2 )
 }
 
 function command_package() {
@@ -100,11 +101,11 @@ function show_usage() {
 Usage: $0 [OPTIONS] [ARGS]
 
 Available options:
-	-h		show this message
-	-p		specify a mod pack to install
-	-m		specify a single mod to install
-	-v		verbose output
-	-q		supress warnings
+	-h			show this message
+	-p [pack]	specify a mod pack to install
+	-m [mod]	specify a single mod to install
+	-v			verbose output
+	-q			supress warnings
 HELP
 }
 
@@ -126,6 +127,7 @@ function run_mod() {
 	# Actions: append, place, package
 	IFS=$'\n'
 	for line in $(cat $1/props.txt); do
+		unset IFS
 		cmd=$( echo $line | cut -f1 -d= | tr [:upper:] [:lower:] )
 		args=$( echo $line | cut -f2- -d= )
 		log 3 "cmd: $cmd; args: $args"
