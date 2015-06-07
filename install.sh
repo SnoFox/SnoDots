@@ -83,7 +83,7 @@ function command_place() {
 		return 1
 	fi
 	log 2 "Linking $1 at $2..."
-	echo ln -s ${HOME}/.dots/$1 $( eval echo $2 )
+	ln -s ${HOME}/.dots/$1 $( eval echo $2 )
 }
 
 function command_package() {
