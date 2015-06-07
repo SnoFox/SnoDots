@@ -1,0 +1,2 @@
+# SnoDots props v1
+place=dir_colors ${HOME}/.dir_colors
