@@ -125,29 +125,37 @@ function run_mod() {
 	echo "Running mod $1 ..."
 	cp -r $1/* ${HOME}/.dots/
 	# Actions: append, place, package
-	IFS=$'\n'
-	for line in $(cat $1/props.txt); do
-		unset IFS
-		cmd=$( echo $line | cut -f1 -d= | tr [:upper:] [:lower:] )
-		args=$( echo $line | cut -f2- -d= )
-		log 3 "cmd: $cmd; args: $args"
-		case $cmd in
-			\#*)
-				;;
-			append)
-				command_append $args
-				;;
-			place)
-				command_place $args
-				;;
-			package)
-				command_package $args
-				;;
-			*)
-				echo "Unknown command $cmd in mod $1"
-				;;
-		esac
-	done
+	if [ -e $1/props.txt ]; then
+		IFS=$'\n'
+		for line in $(cat $1/props.txt); do
+			unset IFS
+			cmd=$( echo $line | cut -f1 -d= | tr [:upper:] [:lower:] )
+			args=$( echo $line | cut -f2- -d= )
+			log 3 "cmd: $cmd; args: $args"
+			case $cmd in
+				\#*)
+					;;
+				append)
+					command_append $args
+					;;
+				place)
+					command_place $args
+					;;
+				package)
+					command_package $args
+					;;
+				*)
+					echo "Unknown command $cmd in mod $1"
+					;;
+			esac
+		done
+	else
+		# Simple mod; no props file
+		# Drop everything into ~ with a . in front of it
+		for file in $(ls $1); do
+			command_place $file \${HOME}/.$file
+		done
+	fi
 }
 
 while getopts ":p:m:hqv" opts; do
