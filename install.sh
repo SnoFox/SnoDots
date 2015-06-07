@@ -24,6 +24,7 @@ packs[okta-zsh]=""
 ########
 
 loglevel=1
+dotsgone=false
 
 function log() {
 	if [ $loglevel -ge $1 ]; then
@@ -50,26 +51,48 @@ function log() {
 	fi
 }
 
+function clear_dots() {
+	if [ $dotsgone = "true"]; then
+		return
+	fi
+	if [ -d ${HOME}/.dots ]; then
+		rm -rf ${HOME}/.dots
+	fi
+	mkdir -p ${HOME}/.dots
+	cat <<WARN > ${HOME}/.dots/README
+EVERYTHING IN THIS DIRECTORY WILL BE DELETED
+WHEN SNODOTS INSTALLER RUNS AGAIN. BEWARE!
+WARN 
+	dotsgone=true
+}
+
 function command_append() {
 	# $1 - source file; $2 - dest to append
-	log 2 "Appending data to $2"
-	cat $1 >> $2
+	log 2 "Appending data from $1 to $2"
+	cat ${HOME}/.dots/$1 >> $2
 }
 
 function command_place() {
 	# $1 - source; $2 - destination
-	log 2 "Placing $1 in $2..."
-	cp -a $1 $2
+	log 2 "Linking $1 at $2..."
+	ln -s ${HOME}/.dots/$1 $2
 }
 
 function command_replace() {
 	# $1 - source; $2 - destination
 	log 2 "Replacing $1 with $2..."
+	if [ -h $2 ]; then
+		rm $2
+	elif [ -e $2 ]; then
+		echo "Skipping replacement of $2; file already exists"
+		return 1
+	fi
+	ln -s ${HOME}/.dots/$1 $2
 }
 
 function command_package() {
-	# $1 package
-	# XXX logic to find the package
+	# $1 - package
+	# XXX logic to find the package based on OS
 	test 1 # Noop
 }
 function command_depends() {
@@ -78,7 +101,7 @@ function command_depends() {
 }
 
 function show_usage() {
-	cat <<SHOWHELP
+	cat <<HELP
 Usage: $0 [OPTIONS] [ARGS]
 
 Available options:
@@ -87,13 +110,14 @@ Available options:
 	-m		specify a single mod to install
 	-v		verbose output
 	-q		supress warnings
-SHOWHELP
+HELP
 }
 
 function run_modpack() {
 	if [ -z ${packs[$1]} ]; then
 		echo "Skipping $1 pack -- nonexistent or empty"
 	else
+		echo "Running modpack $1 ..."
 		for mod in ${packs[$1]}; do
 			run_mod $mod
 		done
@@ -101,7 +125,9 @@ function run_modpack() {
 }
 
 function run_mod() {
+	clear_dots
 	echo "Running mod $1 ..."
+	cp -r $1/* ${HOME}/.dots/
 	# Actions: append, place, replace
 	IFS=$'\n'
 	for line in $(cat $1/props.txt); do
@@ -122,6 +148,7 @@ function run_mod() {
 				;;
 			package)
 				command_package $args
+				;;
 			*)
 				echo "Unknown command $cmd in mod $1"
 				;;
