@@ -1,2 +1,0 @@
-#! /bin/sh
-concat_path "${HOME}/go/bin"
