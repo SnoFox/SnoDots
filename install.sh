@@ -91,9 +91,12 @@ function command_package() {
 	# XXX logic to find the package based on OS
 	test 1 # Noop
 }
-function command_depends() {
-	# $1 - dependant mod
-	run_mod $1
+
+function command_execute() {
+	# $1 - script; $2-$N - args for script
+	script=${HOME}/.dots/$1
+	shift
+	$script $@
 }
 
 function show_usage() {
@@ -140,6 +143,9 @@ function run_mod() {
 					;;
 				place)
 					command_place $args
+					;;
+				execute)
+					command_execute $args
 					;;
 				package)
 					command_package $args
