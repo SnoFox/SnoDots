@@ -62,7 +62,7 @@ function clear_dots() {
 	cat <<WARN > ${HOME}/.dots/README
 EVERYTHING IN THIS DIRECTORY WILL BE DELETED
 WHEN SNODOTS INSTALLER RUNS AGAIN. BEWARE!
-WARN 
+WARN
 	dotsgone=true
 }
 
