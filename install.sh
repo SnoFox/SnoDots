@@ -52,7 +52,7 @@ function log() {
 }
 
 function clear_dots() {
-	if [ $dotsgone = "true"]; then
+	if [ $dotsgone = "true" ]; then
 		return
 	fi
 	if [ -d ${HOME}/.dots ]; then
@@ -133,7 +133,7 @@ function run_mod() {
 	for line in $(cat $1/props.txt); do
 		cmd=$( echo $line | cut -f1 -d= | tr [:upper:] [:lower:] )
 		args=$( echo $line | cut -f2- -d= )
-		echo "cmd: $cmd; args: $args"
+		log 3 "cmd: $cmd; args: $args"
 		case $cmd in
 			\#*)
 				;;
