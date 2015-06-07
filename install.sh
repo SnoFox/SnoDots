@@ -74,19 +74,14 @@ function command_append() {
 
 function command_place() {
 	# $1 - source; $2 - destination
-	log 2 "Linking $1 at $2..."
-	ln -s ${HOME}/.dots/$1 $2
-}
-
-function command_replace() {
-	# $1 - source; $2 - destination
-	log 2 "Replacing $1 with $2..."
 	if [ -h $2 ]; then
 		rm $2
+		return 1
 	elif [ -e $2 ]; then
-		echo "Skipping replacement of $2; file already exists"
+		echo "Skipping placement of $2; file already exists"
 		return 1
 	fi
+	log 2 "Linking $1 at $2..."
 	ln -s ${HOME}/.dots/$1 $2
 }
 
@@ -128,7 +123,7 @@ function run_mod() {
 	clear_dots
 	echo "Running mod $1 ..."
 	cp -r $1/* ${HOME}/.dots/
-	# Actions: append, place, replace
+	# Actions: append, place, package
 	IFS=$'\n'
 	for line in $(cat $1/props.txt); do
 		cmd=$( echo $line | cut -f1 -d= | tr [:upper:] [:lower:] )
@@ -142,9 +137,6 @@ function run_mod() {
 				;;
 			place)
 				command_place $args
-				;;
-			replace)
-				command_replace $args
 				;;
 			package)
 				command_package $args
