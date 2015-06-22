@@ -1,0 +1,4 @@
+# SnoDots props v1
+package=vim
+place=vim .vim
+place=vimrc .vimrc
