@@ -13,10 +13,10 @@
 ############
 
 typeset -A packs
-packs[lite]="zsh bash commonsh vim top git lessfilter screen"
+packs[lite]="zsh commonsh vim top git screen"
 packs[heavy]="zsh-syntax-highlighting"
 packs[desktop]="conky"
-packs[windows]="minitty"
+packs[windows]="mintty"
 packs[okta-zsh]=""
 
 ########
@@ -103,7 +103,7 @@ find_os() {
 add_package() {
 	declare key=$1
 	declare val=$2
-	if [ -z "${packages["$key"]}" ]; then
+	if [ "x${packages["$key"]}" == "x" ]; then
 		log 3 "Adding package $key as $val from $searchOS"
 		packages["$key"]=$val
 	else
@@ -113,7 +113,7 @@ add_package() {
 
 gen_package_list() {
 	log 2 "Generating packages for $OS..."
-	[ -z "$1" ] && searchOS=$OS || searchOS=$1
+	[ "x$1" == "x" ] && searchOS=$OS || searchOS=$1
 	typeset -a results
 	results=( $( awk -f iniparse.awk packagedb.ini | grep -i $searchOS. ) )
 	typeset -a inherits
@@ -152,16 +152,16 @@ function command_place() {
 
 function command_package() {
 	# $1 - package
-	if [ -z packages_generated ]; then
+	if [ "x$packages_generated" == "x" ]; then
 		log 0 "Generating package map..."
 		gen_package_list
 		packages_generated=true
 	fi
 
-	if [ -z $1 ]; then
+	if [ "x$1" == "x" ]; then
 		log 1 "No package name given for package directive"
 		return
-	elif [ -z ${packages[$1]} ]; then
+	elif [ "x${packages[$1]}" == "x" ]; then
 		log 1 "No distro-specific map for package: $1; trying the raw string"
 		packages[$1]=$1
 	fi
@@ -213,7 +213,7 @@ HELP
 }
 
 function run_modpack() {
-	if [ -z ${packs[$1]} ]; then
+	if [ "x${packs[$1]}" == "x" ]; then
 		echo "Skipping $1 pack -- nonexistent or empty"
 	else
 		echo "Running modpack $1 ..."
