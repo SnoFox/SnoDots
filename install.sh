@@ -24,8 +24,12 @@ packs[okta-zsh]=""
 ########
 
 # Boring, house-keeping stuff
-loglevel=1
-dotsgone=false
+typeset -A packages
+function bootstrap() {
+	loglevel=1
+	dotsgone=false
+	OS="null"
+}
 
 function log() {
 	if [ $loglevel -ge $1 ]; then
@@ -68,6 +72,66 @@ WARN
 	dotsgone=true
 }
 
+find_linux_distro() {
+	[ -e /etc/os-release ] && relfile="/etc/os-release" || relfile="/usr/lib/os-release"
+	if [ -n "$relfile" ]; then
+		OS=$( cat /etc/os-release|grep -G '^ID='|cut -d= -f2|tr -d \" )
+	else
+		OS="unknown-linux"
+	fi
+}
+
+find_os() {
+	case $( uname -s | tr [:upper:] [:lower:] ) in
+		cygwin*)
+			OS="windows"
+			;;
+		linux)
+			find_linux_distro
+			;;
+		darwin)
+			OS="macos"
+			;;
+		sunos)
+			OS="sunos"
+			;;
+		*)
+			OS="unknown"
+			;;
+	esac
+}
+add_package() {
+	declare key=$1
+	declare val=$2
+	if [ -z "${packages["$key"]}" ]; then
+		log 3 "Adding package $key as $val from $searchOS"
+		packages["$key"]=$val
+	else
+		log 2 "Skip adding package $key as $val from $searchOS -- already set to ${packages["$key"]}"
+	fi
+}
+
+gen_package_list() {
+	log 2 "Generating packages for $OS..."
+	[ -z "$1" ] && searchOS=$OS || searchOS=$1
+	typeset -a results
+	results=( $( awk -f iniparse.awk packagedb.ini | grep -i $searchOS. ) )
+	typeset -a inherits
+	for i in ${results[@]}; do
+		declare key=$( cut -d. -f2 <<< $i | cut -d= -f1 )
+		declare val=$( cut -d= -f2 <<< $i )
+		if [ $key == "_INHERIT" ]; then
+			inherits[${#inherits[*]}]=$val
+			continue
+		fi
+		add_package $key $val
+	done
+	for i in ${inherits[@]}; do
+		log 3 "Inheriting from $i..."
+		gen_package_list $i
+	done
+}
+
 function command_append() {
 	# $1 - source file; $2 - dest to append
 	log 2 "Appending data from $1 to $2"
@@ -88,8 +152,44 @@ function command_place() {
 
 function command_package() {
 	# $1 - package
-	# XXX logic to find the package based on OS
-	test 1 # Noop
+	if [ -z packages_generated ]; then
+		log 0 "Generating package map..."
+		gen_package_list
+		packages_generated=true
+	fi
+
+	if [ -z $1 ]; then
+		log 1 "No package name given for package directive"
+		return
+	elif [ -z ${packages[$1]} ]; then
+		log 1 "No distro-specific map for package: $1; trying the raw string"
+		packages[$1]=$1
+	fi
+	declare pkgcmd
+	case $OS in
+		cygwin*)
+			pkgcmd="cyg-get install -y "
+			;;
+		debian)
+			pkgcmd="sudo apt-get install -y "
+			;;
+		ubuntu)
+			pkgcmd="sudo apt-get install -y "
+			;;
+		mint)
+			pkgcmd="sudo apt-get install -y "
+			;;
+		centos)
+			pkgcmd="sudo yum install -y "
+			;;
+		fedora)
+			pkgcmd="sudo yum install -y "
+			;;
+		*)
+			pkgcmd="echo Please install the following packages: "
+			;;
+	esac
+	$pkgcmd ${packages[$1]}
 }
 
 function command_execute() {
@@ -164,6 +264,8 @@ function run_mod() {
 	fi
 }
 
+bootstrap
+find_os
 while getopts ":p:m:hqv" opts; do
 	case $opts in
 		h)
