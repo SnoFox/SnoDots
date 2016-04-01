@@ -24,12 +24,10 @@ packs[okta-zsh]=""
 ########
 
 # Boring, house-keeping stuff
+cd $( dirname $0 )
 typeset -A packages
-function bootstrap() {
-	loglevel=1
-	dotsgone=false
-	OS="null"
-}
+loglevel=1
+OS="null"
 
 function log() {
 	if [ $loglevel -ge $1 ]; then
@@ -58,19 +56,15 @@ function log() {
 
 # Slightly more interesting
 function clear_dots() {
-	if [ $dotsgone = "true" ]; then
-		return
-	fi
-	if [ -d ${HOME}/.dots ]; then
-		rm -rf ${HOME}/.dots
-	fi
-	mkdir -p ${HOME}/.dots
-	cat <<WARN > ${HOME}/.dots/README
-EVERYTHING IN THIS DIRECTORY WILL BE DELETED
-WHEN SNODOTS INSTALLER RUNS AGAIN. BEWARE!
-WARN
-	dotsgone=true
+# do something with the .trackedfiles var to compare against git repo
+#	cat <<WARN > ${HOME}/.dots/README
+#EVERYTHING IN THIS DIRECTORY WILL BE DELETED
+#WHEN SNODOTS INSTALLER RUNS AGAIN. BEWARE!
+#WARN
 }
+
+clear_dots zsh
+exit 99
 
 find_linux_distro() {
 	[ -e /etc/os-release ] && relfile="/etc/os-release" || relfile="/usr/lib/os-release"
@@ -133,37 +127,37 @@ gen_package_list() {
 }
 
 function command_append() {
-	# $1 - source file; $2 - dest to append
-	log 2 "Appending data from $1 to $2"
-	cat ${HOME}/.dots/$1 >> $( eval echo $2 )
+	# $2 - source file; $3 - dest to append
+	log 2 "Appending data from $2 to $3"
+	cat ${HOME}/.dots/$1/$2 >> $( eval echo $3 )
 }
 
 function command_place() {
-	# $1 - source; $2 - destination
-	if [ -h $2 ]; then
-		rm $2
-	elif [ -e $2 ]; then
-		echo "Skipping placement of $2; file already exists"
+	# $2 - source; $3 - destination
+	if [ -h $3 ]; then
+		rm $3
+	elif [ -e $3 ]; then
+		log 0 "Skipping placement of $3; file already exists and is not a link"
 		return 1
 	fi
-	log 2 "Linking $1 at $2..."
-	ln -s ${HOME}/.dots/$1 $( eval echo $2 )
+	log 2 "Linking $2 at $3..."
+	ln -s ${HOME}/.dots/$1/$2 $( eval echo $3 )
 }
 
 function command_package() {
-	# $1 - package
+	# $2 - package
 	if [ "x$packages_generated" == "x" ]; then
 		log 0 "Generating package map..."
 		gen_package_list
 		packages_generated=true
 	fi
 
-	if [ "x$1" == "x" ]; then
+	if [ "x$2" == "x" ]; then
 		log 1 "No package name given for package directive"
 		return
-	elif [ "x${packages[$1]}" == "x" ]; then
-		log 1 "No distro-specific map for package: $1; trying the raw string"
-		packages[$1]=$1
+	elif [ "x${packages[$2]}" == "x" ]; then
+		log 1 "No distro-specific map for package: $2; trying the raw string"
+		packages[$2]=$2
 	fi
 	declare pkgcmd
 	case $OS in
@@ -189,12 +183,12 @@ function command_package() {
 			pkgcmd="echo Please install the following packages: "
 			;;
 	esac
-	$pkgcmd ${packages[$1]}
+	$pkgcmd ${packages[$2]}
 }
 
 function command_execute() {
-	# $1 - script; $2-$N - args for script
-	script=${HOME}/.dots/$1
+	# $2 - script; $3-$N - args for script
+	script=${HOME}/.dots/$1/$2
 	shift
 	$script $@
 }
@@ -223,14 +217,20 @@ function run_modpack() {
 	fi
 }
 
+copy_mod() {
+	cp -r $1 ${HOME}/.dots/
+	find ${HOME}/.dots/$1 >> ${HOME}/.dots/.trackedfiles
+}
+
 function run_mod() {
-	clear_dots
-	echo "Running mod $1 ..."
-	cp -r $1/* ${HOME}/.dots/
+	declare mod = $1
+	echo "Running mod $mod ..."
+	clear_dots $mod
+	copy_mod $mod
 	# Actions: append, place, package
-	if [ -e $1/props.txt ]; then
+	if [ -e $mod/props.txt ]; then
 		IFS=$'\n'
-		for line in $(cat $1/props.txt); do
+		for line in $(cat $mod/props.txt); do
 			unset IFS
 			cmd=$( echo $line | cut -f1 -d= | tr [:upper:] [:lower:] )
 			args=$( echo $line | cut -f2- -d= )
@@ -239,19 +239,19 @@ function run_mod() {
 				\#*)
 					;;
 				append)
-					command_append $args
+					command_append $mod $args
 					;;
 				place)
-					command_place $args
+					command_place $mod $args
 					;;
 				execute)
-					command_execute $args
+					command_execute $mod $args
 					;;
 				package)
-					command_package $args
+					command_package $mod $args
 					;;
 				*)
-					echo "Unknown command $cmd in mod $1"
+					echo "Unknown command $cmd in mod $mod"
 					;;
 			esac
 		done
@@ -264,7 +264,6 @@ function run_mod() {
 	fi
 }
 
-bootstrap
 find_os
 while getopts ":p:m:hqv" opts; do
 	case $opts in
