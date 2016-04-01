@@ -17,8 +17,29 @@ cmds = [
   ["echo", "Hello, world!"]
 ]
 
+# Base tasks
 [tasks.base]
+deps = ["install_base", "setup_base"]
+
+[tasks.windows]
+deps = ["setup_mintty"]
+
+[tasks.desktop]
+deps = ["setup_desktop", "install_desktop"]
+
+# Split tasks
+[tasks.install_base]
+deps = ["install_screen", "install_zsh", "install_vim"]
+
+[tasks.setup_base]
 deps = ["setup_commonsh", "setup_zsh", "setup_screen", "setup_dir_colors", "setup_vim", "setup_git"]
+
+[tasks.install_desktop]
+dep = ["install_conky"]
+
+[tasks.setup_desktop]
+dep = ["setup_conky"]
+
 
 ##############
 # Installers #
@@ -27,6 +48,22 @@ deps = ["setup_commonsh", "setup_zsh", "setup_screen", "setup_dir_colors", "setu
 cmds = [
   ["@install", "screen"]
 ]
+
+[tasks.install_zsh]
+cmds = [
+  ["@install", "zsh"]
+]
+
+[tasks.install_conky]
+cmds = [
+  ["@install", "conky"]
+]
+
+[tasks.install_vim]
+cmds = [
+  ["@install", "vim"]
+]
+
 
 #############
 # Dot setup #
@@ -119,7 +156,7 @@ prefix = ["echo", "== Please install"]
 suffix = ["=="]
 
 [macros.install__debian]
-prefix = ["echo", "sudo", "apt-get", "install", "-y"]
+prefix = ["sudo", "apt-get", "install", "-y"]
 
 [macros.install__ubuntu]
 prefix = ["@install__debian"]
@@ -127,4 +164,14 @@ prefix = ["@install__debian"]
 [macros.install__mint]
 prefix = ["@install__ubuntu"]
 
+[macros.install__rhel]
+prefix = ["sudo", "yum", "install", "--assumeyes"]
 
+[macros.install__centos]
+prefix = ["@install__rhel"]
+
+[macros.install__fedora]
+prefix = ["@install__rhel"]
+
+[macros.install__arch]
+prefix = ["sudo", "pacman", "-S", "--needed", "--noconfirm"]

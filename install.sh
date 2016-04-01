@@ -63,12 +63,18 @@ find_exe_suffix() {
 	fi
 }
 
-install_base() {
+install_tasks() {
+	if [ $# -eq 0 ]; then
+		echo 'No tasks requested; installing "base"'
+		set -- base $@
+	fi
 	find_os
 	find_arch
 	find_exe_suffix
 	BINNAME=homemaker_${KERNEL}_${ARCH}${SUFFIX}
-	homemaker/$BINNAME -task base -variant $OS base.tml .
+	for i in "$@"; do
+		homemaker/$BINNAME -task $i -variant $OS base.tml .
+	done
 }
 
 
@@ -90,7 +96,8 @@ while getopts "his" opts; do
 			exit 0
 			;;
 		i)
-			install_base
+			shift
+			install_tasks $@
 			exit 0
 			;;
 		s)
