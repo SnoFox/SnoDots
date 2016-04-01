@@ -1,3 +1,0 @@
-# SnoDots props v1
-place=shinit ${HOME}/.shinit
-place=shinit ${HOME}/.mkshrc

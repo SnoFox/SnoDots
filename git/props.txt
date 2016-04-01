@@ -1,5 +1,0 @@
-# SnoDots v1
-package=git
-place=gitconfig ${HOME}/.gitconfig
-place=githelpers ${HOME}/.githelpers
-place=gitignore ${HOME}/.gitignore

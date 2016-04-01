@@ -1,2 +1,0 @@
-# SnoDots props v1
-place=authorized_keys ${HOME}/.ssh/authorized_keys

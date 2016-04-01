@@ -1,3 +1,0 @@
-# SnoDots props v1
-execute=build.sh
-place=answerback.$( uname -s ) ${HOME}/bin

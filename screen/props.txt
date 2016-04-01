@@ -1,3 +1,0 @@
-# SnoDots prop v1
-package=screen
-place=screenrc ${HOME}/.screenrc
