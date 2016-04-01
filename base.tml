@@ -90,8 +90,8 @@ links = [
 [tasks.setup_git]
 links = [
   [".gitconfig", "git/gitconfig"],
-  [".gitconfig", "git/githelpers"],
-  [".gitconfig", "git/gitignore"]
+  [".githelpers", "git/githelpers"],
+  [".gitignore", "git/gitignore"]
 ]
 
 [tasks.setup_mintty]
