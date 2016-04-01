@@ -1,0 +1,130 @@
+#######################
+#    SnoDots Config   #
+#  Best used wrapped  #
+# by installer script #
+# - . - . - . - . - . #
+#    Wheeeeeeeeeee    #
+#######################
+
+
+##############
+# Pack Tasks #
+##############
+[tasks.default]
+deps = []
+links = []
+cmds = [
+  ["echo", "Hello, world!"]
+]
+
+[tasks.base]
+deps = ["setup_commonsh", "setup_zsh", "setup_screen", "setup_dir_colors", "setup_vim", "setup_git"]
+
+##############
+# Installers #
+##############
+[tasks.install_screen]
+cmds = [
+  ["@install", "screen"]
+]
+
+#############
+# Dot setup #
+#############
+
+# Group the shells together
+[tasks.setup_commonsh]
+links = [
+  [".commonsh", "commonsh/commonsh"]
+]
+
+[tasks.setup_bash]
+deps = ["setup_commonsh"]
+links = [
+  [".bashrc", "bash/bashrc"],
+  [".bash_profile", "bash/bash_profile"],
+  [".bash", "bash/bash"]
+]
+
+[tasks.setup_sh]
+deps = ["setup_commonsh"]
+links = [
+  [".shinit", "sh/shinit"],
+  [".mkshrc", "sh/shinit"]
+]
+
+[tasks.setup_zsh]
+deps = ["setup_commonsh"]
+links = [
+  [".zshrc", "zsh/zshrc"],
+  [".zsh", "zsh/zsh"]
+]
+
+# Everything else \o/
+[tasks.setup_dir_colors]
+links = [
+  [".dir_colors", "dir_colors/dir_colors"]
+]
+
+[tasks.setup_conky]
+links = [
+  [".conkyrc", "conky/conkyrc"]
+]
+
+[tasks.setup_screen]
+links = [
+  [".screenrc", "screen/screenrc"]
+]
+
+[tasks.setup_ssh]
+links = [
+  [".ssh/authorized_keys", "ssh/authorized_keys"],
+  [".ssh/sshd_config", "ssh/sshd_config"]
+]
+
+[tasks.setup_gdb]
+links = [
+  [".gdbinit", "gdb/gdbinit"]
+]
+
+[tasks.setup_git]
+links = [
+  [".gitconfig", "git/gitconfig"],
+  [".gitconfig", "git/githelpers"],
+  [".gitconfig", "git/gitignore"]
+]
+
+[tasks.setup_mintty]
+links = [
+  [".minttyrc", "mintty/minttyrc"]
+]
+
+[tasks.setup_top]
+links = [
+  [".toprc", "top/toprc"]
+]
+
+[tasks.setup_vim]
+links = [
+  [".vim", "vim/vim"],
+  [".vimrc", "vim/vimrc"]
+]
+
+##########
+# Macros #
+##########
+
+[macros.install]
+prefix = ["echo", "== Please install"]
+suffix = ["=="]
+
+[macros.install__debian]
+prefix = ["echo", "sudo", "apt-get", "install", "-y"]
+
+[macros.install__ubuntu]
+prefix = ["@install__debian"]
+
+[macros.install__mint]
+prefix = ["@install__ubuntu"]
+
+
