@@ -1,0 +1,6 @@
+if [ $(uname -o) == "Cygwin" ]; then
+	ps|grep /usr/bin/ssh-agent$ > /dev/null || ssh-agent | sed 's/^echo.*//' > ${HOME}/.ssh/env
+	source ${HOME}/.ssh/env
+fi
+
+# vim: set syntax=sh :
