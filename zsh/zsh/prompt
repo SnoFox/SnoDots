@@ -106,11 +106,8 @@ git_prompt_status() {
 	echo $STATUS
 }
 haveknife () {
-	if [ ! -z $(which knife) ]; then
-		true
-	else
-		false
-	fi
+	which knife &> /dev/null
+	return \!$!
 }
 function updateprompt () {
 	if haveknife; then
