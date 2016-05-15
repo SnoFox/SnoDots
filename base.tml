@@ -35,10 +35,10 @@ deps = ["install_screen", "install_zsh", "install_vim"]
 deps = ["setup_commonsh", "setup_zsh", "setup_screen", "setup_dir_colors", "setup_vim", "setup_git"]
 
 [tasks.install_desktop]
-dep = ["install_conky"]
+deps = ["install_conky"]
 
 [tasks.setup_desktop]
-dep = ["setup_conky"]
+deps = ["setup_conky"]
 
 
 ##############
