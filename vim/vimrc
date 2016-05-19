@@ -299,10 +299,6 @@ if has('eval')
 endif
 
 " some emacs-isms are OK
-map! <C-a> <Home>
-map  <C-a> <Home>
-map! <C-e> <End>
-map  <C-e> <End>
 imap <C-f> <Right>
 imap <C-b> <Left>
 map! <M-BS> <C-w>
