@@ -180,6 +180,8 @@ function updateprompt () {
 		PROMPT=${RESETCOLOR}'[%n@%m '"${reponame} ${branch}${YELLOW}${stats}${additional} ${RESETCOLOR}"$'%45<...<'"${repopath}"']%(?..'${BOLDERRORCOLOR}$')%(!.#.$) '${RESETCOLOR}
 
 		RGIT=${RESETCOLOR}${stashpart}${remotepart}
+	else
+		unset RGIT
 	fi
 	PROMPT=${RESETCOLOR}'[%n@%m %45<...<%~%(?..)]%(?..'${BOLDERRORCOLOR}$')%(!.#.$) '
 	RPROMPT=${RESETCOLOR}${KNIFE}${RGIT}$'%1(j.'${JOBCOLOR}$'[%j].)%(?..'${ERRORCOLOR}$'[%?])'${CLOCKCOLOR}$'[%t]'${RESETCOLOR}
