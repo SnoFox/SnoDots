@@ -4,3 +4,8 @@ alias rm='nocorrect rm -ir'
 alias mkdir='nocorrect mkdir'
 alias :q='exit'
 alias :wq='exit'
+if [[ `uname -s` = Darwin ]]; then
+	#no-op
+else
+	alias ls='ls --color=always'
+fi
