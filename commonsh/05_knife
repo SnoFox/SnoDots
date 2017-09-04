@@ -1,7 +1,7 @@
 #!/bin/sh
 
 get_knife_block() {
-	local block=$(grep CHEFSRV ~/.chef/knife.rb|awk '{print $3}')
+	local block=$(grep CHEFSRV ~/.chef/knife.rb 2> /dev/null|awk '{print $3}')
 	if [ -z $block ]; then
 		block="<none>"
 	fi
