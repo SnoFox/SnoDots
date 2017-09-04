@@ -57,3 +57,8 @@ if [ -d "${HOME}/.zsh" ] ; then
 		. "${HOME}/.zsh/${file}"
 	done
 fi
+
+source ~/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export OKTA_HOME=$HOME/okta

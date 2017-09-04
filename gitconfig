@@ -1,6 +1,5 @@
-[user]
-	name = Josh Johnson
-	email = SnoFox@SnoFox.net
+[include]
+	path = ~/.gitconfig.d/user
 [diff]
 [color]
 	ui = auto

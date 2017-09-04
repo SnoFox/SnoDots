@@ -9,3 +9,4 @@ if [[ `uname -s` = Darwin ]]; then
 else
 	alias ls='ls --color=always'
 fi
+alias nomy='okta-nomy-cli instances'
