@@ -4,6 +4,7 @@ cd $(dirname ${BASH_SOURCE})/
 OS="null"
 KERNEL="null"
 ARCH="null"
+DEFSFILE="base.tml"
 
 find_linux_distro() {
 	[ -e /etc/os-release ] && relfile="/etc/os-release" || relfile="/usr/lib/os-release"
@@ -73,10 +74,13 @@ install_tasks() {
 	find_exe_suffix
 	BINNAME=homemaker_${KERNEL}_${ARCH}${SUFFIX}
 	for i in "$@"; do
-		homemaker/$BINNAME -task $i -variant $OS base.tml .
+		homemaker/$BINNAME -task $i -variant $OS $DEFSFILE .
 	done
 }
 
+list_tasks() {
+	awk -F. '/^\[tasks\.(setup_|install_|default)/ { next } /^\[tasks./ { print substr($2, 1, length($2)-1) }' $DEFSFILE
+}
 
 show_usage() {
 	cat <<HELP
@@ -84,12 +88,13 @@ Usage: $0 <option>
 
 One of:
 	-h		Show this message
+	-l		List available packages
 	-i		Install packages
 	-s		Setup dotfiles
 HELP
 }
 
-while getopts "his" opts; do
+while getopts "hlis" opts; do
 	case $opts in
 		h)
 			show_usage
@@ -102,6 +107,10 @@ while getopts "his" opts; do
 			;;
 		s)
 			echo "Not yet implemented"
+			exit 0
+			;;
+		l)
+			list_tasks
 			exit 0
 			;;
 		*)
