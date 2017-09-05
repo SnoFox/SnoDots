@@ -1,0 +1,2 @@
+alias nomy="okta-nomy-cli instances"
+alias week="date '+%Y.%W'"

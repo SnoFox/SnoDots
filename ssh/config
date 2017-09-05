@@ -1,0 +1,7 @@
+PreferredAuthentications publickey
+
+Host *.snofox.net *.fox.ninja
+    ForwardAgent yes
+    User josh
+
+Include overlays/*

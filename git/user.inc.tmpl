@@ -1,0 +1,8 @@
+[user]
+	name = Josh Johnson
+{{- if eq .Env.HM_OVERLAY "sno"}}
+	email = "snofoxzsnofoxzznet"
+{{else if eq .Env.HM_OVERLAY "okta"}}
+	email = "jjohnsonzoktazzcom"
+{{end}}
+; vim: set syntax=gitconfig:

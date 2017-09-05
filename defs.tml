@@ -17,17 +17,7 @@ cmds = [
   ["echo", "Hello, world!"]
 ]
 
-# Base tasks
-[tasks.base]
-deps = ["install_base", "setup_base"]
-
-[tasks.windows]
-deps = ["setup_mintty"]
-
-[tasks.desktop]
-deps = ["setup_desktop", "install_desktop"]
-
-# Split tasks
+# Packages
 [tasks.install_base]
 deps = ["install_screen", "install_zsh", "install_vim"]
 
@@ -40,26 +30,29 @@ deps = ["install_conky"]
 [tasks.setup_desktop]
 deps = ["setup_conky"]
 
-
 ##############
 # Installers #
 ##############
 [tasks.install_screen]
+rejects = [["which", "screen"]]
 cmds = [
   ["@install", "screen"]
 ]
 
 [tasks.install_zsh]
+rejects = [["which", "zsh"]]
 cmds = [
   ["@install", "zsh"]
 ]
 
 [tasks.install_conky]
+rejects = [["which", "conky"]]
 cmds = [
   ["@install", "conky"]
 ]
 
 [tasks.install_vim]
+rejects = [["which", "vim"]]
 cmds = [
   ["@install", "vim"]
 ]
@@ -73,6 +66,13 @@ cmds = [
 [tasks.setup_commonsh]
 links = [
   [".commonsh", "commonsh/commonsh"]
+]
+
+[tasks.setup_commonsh__okta]
+deps = ["setup_commonsh__"]
+links =  [
+  [".commonsh/50-okta-aliases", "commonsh/overlays/okta/aliases"],
+  [".commonsh/40-okta-variables", "commonsh/overlays/okta/variables"]
 ]
 
 [tasks.setup_bash]
@@ -97,7 +97,6 @@ links = [
   [".zsh", "zsh/zsh"]
 ]
 
-# Everything else \o/
 [tasks.setup_dir_colors]
 links = [
   [".dir_colors", "dir_colors/dir_colors"]
@@ -116,7 +115,13 @@ links = [
 [tasks.setup_ssh]
 links = [
   [".ssh/authorized_keys", "ssh/authorized_keys"],
-  [".ssh/sshd_config", "ssh/sshd_config"]
+  [".ssh/config", "ssh/config"]
+]
+
+[tasks.setup_ssh__okta]
+deps = ["setup_ssh__"]
+links = [
+  [".ssh/okta_config", "ssh/overlays/okta/config"]
 ]
 
 [tasks.setup_gdb]
@@ -129,6 +134,13 @@ links = [
   [".gitconfig", "git/gitconfig"],
   [".githelpers", "git/githelpers"],
   [".gitignore", "git/gitignore"]
+]
+templates = [
+  [".gitconfig.d/user.inc", "git/user.inc.tmpl"]
+]
+cmdspost = [
+  ["sed", "-i", "''", "s/zz/./", "${HOME}/.gitconfig.d/user.inc"],
+  ["sed", "-i", "''", "s/z/@/", "${HOME}/.gitconfig.d/user.inc"]
 ]
 
 [tasks.setup_mintty]

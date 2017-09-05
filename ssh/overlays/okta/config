@@ -1,0 +1,12 @@
+Host *.saasure.com *.internal
+    ForwardAgent yes
+    ServerAliveInterval 60
+    IdentityFile ~/.ssh/%r/id_rsa
+
+Host *.saasure.net
+    ForwardAgent yes
+    IdentityFile ~/.ssh/%r/id_rsa
+    Port 222
+
+Host *-db*mt0*.internal *-db*mt0*.saasure.com
+    StrictHostKeyChecking no
