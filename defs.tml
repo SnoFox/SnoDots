@@ -130,6 +130,7 @@ links = [
 ]
 
 [tasks.setup_git]
+deps = ["setup_ssh"]
 links = [
   [".gitconfig", "git/gitconfig"],
   [".githelpers", "git/githelpers"],
