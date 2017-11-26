@@ -18,17 +18,22 @@ cmds = [
 ]
 
 # Packages
-[tasks.install_base]
+[tasks.package_base]
 deps = ["install_screen", "install_zsh", "install_vim"]
 
 [tasks.setup_base]
 deps = ["setup_commonsh", "setup_zsh", "setup_screen", "setup_dir_colors", "setup_vim", "setup_git"]
 
-[tasks.install_desktop]
+[tasks.package_desktop]
 deps = ["install_conky"]
 
 [tasks.setup_desktop]
 deps = ["setup_conky"]
+
+[tasks.package_windows]
+
+[tasks.setup_windows]
+deps = ["setup_mintty"]
 
 ##############
 # Installers #

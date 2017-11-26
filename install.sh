@@ -73,12 +73,13 @@ install_tasks() {
 	if [ $DRY -eq 1 ]; then
 		ARGS+=("-nocmds")
 		ARGS+=("-nolinks")
+		ARGS+=("-notemplates")
 	fi
 	if [ $VERBOSE -eq 1 ]; then
 		ARGS+=("-verbose")
 	fi
 	for i in "$@"; do
-		HM_OVERLAY=${OVERLAY} homemaker/$BINNAME ${ARGS[@]} -variant $OS -task install_$i $DEFSFILE .
+		HM_OVERLAY=${OVERLAY} homemaker/$BINNAME ${ARGS[@]} -variant $OS -task package_$i $DEFSFILE .
 		HM_OVERLAY=${OVERLAY} homemaker/$BINNAME ${ARGS[@]} -variant $OVERLAY -task setup_$i $DEFSFILE .
 	done
 }
@@ -88,7 +89,7 @@ queue_install() {
 }
 
 list_packages() {
-	awk -F. '/^\[tasks\.(setup_|install_|default)/ { next } /^\[tasks./ { print substr($2, 1, length($2)-1) }' $DEFSFILE
+	awk -F. '/^\[tasks\.package/ { print substr($2, 9, length($2)-9) }' $DEFSFILE
 }
 
 list_overlays() {
@@ -106,10 +107,14 @@ show_usage() {
 Usage: $0 <option>
 
 One of:
-	-h		Show this message
-	-i		Install packages (implies -s)
-	-o		Overlay (default: $OVERLAY)
-	-s		Setup dotfiles
+	-d	Dry run
+	-h	Show this message
+	-i	Install packages. Can be used more than once for multiple packages
+	-l	List packages
+	-L	List overlays
+	-o	Set an overlay for the configs we lay down (default: $OVERLAY)
+	-s	Setup dotfiles
+	-v	Verbose output
 HELP
 }
 
@@ -142,6 +147,7 @@ while getopts ":dhi:Llo:sv" opts; do
 			OVERLAY=$OPTARG
 			;;
 		s)
+			# Setup dotfiles w/o install
 			echo "Not yet implemented on its own"
 			exit 0
 			;;
