@@ -46,7 +46,7 @@ fi
 
 # common shell utils
 if [ -d "${HOME}/.commonsh" ] ; then
-	for file in "${HOME}"/.commonsh/*(N.x:t) ; do
+	for file in "${HOME}"/.commonsh/*(Nx-.:t) ; do
 		. "${HOME}/.commonsh/${file}"
 	done
 fi
