@@ -126,7 +126,7 @@ links = [
 [tasks.setup_ssh__okta]
 deps = ["setup_ssh__"]
 links = [
-  [".ssh/okta_config", "ssh/overlays/okta/config"]
+  [".ssh/overlays/okta_config", "ssh/overlays/okta/config"]
 ]
 
 [tasks.setup_gdb]
