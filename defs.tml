@@ -33,7 +33,7 @@ deps = ["setup_conky"]
 [tasks.package_windows]
 
 [tasks.setup_windows]
-deps = ["setup_mintty"]
+deps = ["setup_mintty", "setup_ssh-agent"]
 
 ##############
 # Installers #
@@ -110,6 +110,12 @@ links = [
 [tasks.setup_conky]
 links = [
   [".conkyrc", "conky/conkyrc"]
+]
+
+[tasks.setup_ssh-agent]
+deps = ["setup_commonsh"]
+links = [
+  [".commonssh/50-windows-ssh_agent", "ssh-agent/windows-ssh_agent"]
 ]
 
 [tasks.setup_screen]
