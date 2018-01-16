@@ -1,7 +1,10 @@
 PreferredAuthentications publickey
+VisualHostKey yes
+ConnectionAttempts 2
+ConnectTimeout 30
+
+Include overlays/*
 
 Host *.snofox.net *.fox.ninja
     ForwardAgent yes
     User josh
-
-Include overlays/*
