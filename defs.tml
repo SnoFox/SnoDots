@@ -157,8 +157,8 @@ templates = [
   [".gitconfig.d/user.inc", "git/user.inc.tmpl"]
 ]
 cmdspost = [
-  ["sed", "-i", "s/zz/./", "${HOME}/.gitconfig.d/user.inc"],
-  ["sed", "-i", "s/z/@/", "${HOME}/.gitconfig.d/user.inc"]
+  ["sed", "-i", "''", "s/zz/./", "${HOME}/.gitconfig.d/user.inc"],
+  ["sed", "-i", "''", "s/z/@/", "${HOME}/.gitconfig.d/user.inc"]
 ]
 
 [tasks.setup_mintty]
