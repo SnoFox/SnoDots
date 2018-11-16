@@ -1,3 +1,11 @@
+Match exec "/usr/local/bin/sft resolve -q  %h"
+    ProxyCommand "/usr/local/bin/sft" proxycommand  %h
+    UserKnownHostsFile "~/Library/Application Support/ScaleFT/proxycommand_known_hosts"
+
+Host *.aue1t.internal
+    ProxyCommand "/usr/local/bin/sft" proxycommand %h
+    UserKnownHostsFile "~/Library/Application\ Support/ScaleFT/proxycommand_known_hosts"
+
 Host *.saasure.com *.internal
     ForwardAgent yes
     ServerAliveInterval 60
@@ -8,5 +16,3 @@ Host *.saasure.net
     IdentityFile ~/.ssh/%r/id_rsa
     Port 222
 
-Host *-db*mt0*.internal *-db*mt0*.saasure.com
-    StrictHostKeyChecking no
