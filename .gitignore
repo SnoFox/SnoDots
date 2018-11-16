@@ -5,4 +5,5 @@ answerback.Linux
 answerback.Darwin
 ssh/id_rsa*
 ssh/known_hosts
+zsh/.history
 conkyrc
