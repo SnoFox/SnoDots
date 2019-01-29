@@ -1,0 +1,3 @@
+#!/bin/sh
+export GOPATH=$HOME/Code/go
+concat_path "$GOPATH/bin"
