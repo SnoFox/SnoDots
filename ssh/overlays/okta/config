@@ -1,10 +1,10 @@
-Match exec "/usr/local/bin/sft resolve -q  %h"
-    ProxyCommand "/usr/local/bin/sft" proxycommand  %h
-    UserKnownHostsFile "~/Library/Application Support/ScaleFT/proxycommand_known_hosts"
-
 Host *.aue1t.internal
-    ProxyCommand "/usr/local/bin/sft" proxycommand %h
-    UserKnownHostsFile "~/Library/Application\ Support/ScaleFT/proxycommand_known_hosts"
+  ProxyCommand "/usr/local/bin/sft" proxycommand --team okta-trex %h
+  UserKnownHostsFile ~/Library/Application\ Support/ScaleFT/proxycommand_known_hosts
+
+Host *.aue1s.internal *.aec1s.internal
+  ProxyCommand "/usr/local/bin/sft" proxycommand --team okta-preview %h
+  UserKnownHostsFile ~/Library/Application\ Support/ScaleFT/proxycommand_known_hosts
 
 Host *.saasure.com *.internal
     ForwardAgent yes
@@ -15,4 +15,3 @@ Host *.saasure.net
     ForwardAgent yes
     IdentityFile ~/.ssh/%r/id_rsa
     Port 222
-
