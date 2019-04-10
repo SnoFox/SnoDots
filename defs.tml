@@ -25,10 +25,10 @@ deps = ["install_screen", "install_zsh", "install_vim"]
 deps = ["setup_commonsh", "setup_zsh", "setup_screen", "setup_dir_colors", "setup_vim", "setup_git"]
 
 [tasks.package_desktop]
-deps = ["install_conky"]
+deps = ["install_conky", "install_i3"]
 
 [tasks.setup_desktop]
-deps = ["setup_conky"]
+deps = ["setup_conky", "setup_i3"]
 
 [tasks.package_windows]
 
@@ -60,6 +60,11 @@ cmds = [
 rejects = [["which", "vim"]]
 cmds = [
   ["@install", "vim"]
+]
+
+[tasks.install_i3]
+cmds = [
+  ["@install", "i3"]
 ]
 
 
@@ -175,6 +180,11 @@ links = [
 links = [
   [".vim", "vim/vim"],
   [".vimrc", "vim/vimrc"]
+]
+
+[tasks.setup_i3]
+links = [
+  [".i3", "i3"]
 ]
 
 ##########
