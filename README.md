@@ -2,7 +2,7 @@
 Algebraic!
 
 # Tech Used
-I'm using the wonderful [Homemaker](FooSoft/homemaker) bundled within the repo to read the TOML file, defs.tml
+I'm using the wonderful [Homemaker](https://github.com/FooSoft/homemaker) bundled within the repo to read the TOML file, defs.tml
 
 ## Variants
 Homemaker's variants are used with the original author's examples -- to vary the install based on OS.
