@@ -1,0 +1,2 @@
+source ${HOME}/.rvm/scripts/rvm
+rvm use 2.5-okta

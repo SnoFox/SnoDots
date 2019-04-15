@@ -82,7 +82,8 @@ links = [
 deps = ["setup_commonsh__"]
 links =  [
   [".commonsh/50-okta-aliases", "commonsh/overlays/okta/aliases"],
-  [".commonsh/40-okta-variables", "commonsh/overlays/okta/variables"]
+  [".commonsh/40-okta-variables", "commonsh/overlays/okta/variables"],
+  [".commonsh/30-okta-rvm", "commonsh/overlays/okta/rvm"]
 ]
 
 [tasks.setup_commonsh__sno]

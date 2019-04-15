@@ -1,17 +1,19 @@
 Host *.aue1t.internal
-  ProxyCommand "/usr/local/bin/sft" proxycommand --team okta-trex %h
-  UserKnownHostsFile ~/Library/Application\ Support/ScaleFT/proxycommand_known_hosts
+  ProxyCommand "/usr/bin/sft" proxycommand --team okta-trex %h
+  UserKnownHostsFile ~/.local/share/ScaleFT/proxycommand_known_host
 
 Host *.aue1s.internal *.aec1s.internal
-  ProxyCommand "/usr/local/bin/sft" proxycommand --team okta-preview %h
-  UserKnownHostsFile ~/Library/Application\ Support/ScaleFT/proxycommand_known_hosts
+  ProxyCommand "/usr/bin/sft" proxycommand --team okta-preview %h
+  UserKnownHostsFile ~/.local/share/ScaleFT/proxycommand_known_host
 
 Host *.saasure.com *.internal
+    User jjohnson
     ForwardAgent yes
     ServerAliveInterval 60
     IdentityFile ~/.ssh/%r/id_rsa
 
 Host *.saasure.net
+    User jjohnson
     ForwardAgent yes
     IdentityFile ~/.ssh/%r/id_rsa
     Port 222

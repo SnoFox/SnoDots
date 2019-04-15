@@ -107,7 +107,7 @@ git_prompt_status() {
 }
 haveknife () {
 	which knife &> /dev/null
-	return \!$!
+	return $?
 }
 function updateprompt () {
 	if haveknife; then
@@ -181,7 +181,7 @@ function updateprompt () {
 
 		RGIT=${RESETCOLOR}${stashpart}${remotepart}
 	fi
-	PROMPT=${RESETCOLOR}'[%n@%m %45<...<%~%(?..)]%(?..'${BOLDERRORCOLOR}$')%(!.#.$) '
+	PROMPT=${RESETCOLOR}'[%n@%m %45<...<%~%(?..)]%(?..'${BOLDERRORCOLOR}$')%(!.#.$) '${RESETCOLOR}
 	RPROMPT=${RESETCOLOR}${KNIFE}${RGIT}$'%1(j.'${JOBCOLOR}$'[%j].)%(?..'${ERRORCOLOR}$'[%?])'${CLOCKCOLOR}$'[%t]'${RESETCOLOR}
 	RGIT=''
 }
