@@ -8,9 +8,9 @@ exec nitrogen --restore
 exec clipster -d
 bindsym XF86Launch7 exec i3lock -f -c 06b5e9
 
-bindsym Ctrl+Shift+v exec /home/josh/.bin/clipster -sc
-bindsym --release Ctrl+Print exec scrot --quality 100 --border --select --exec 'notify-send Screenshot "Screenshot saved as $n"' "$HOME/Pictures/Screenshots/Screenshot-CAPE-%F_%k%M%S.png"
-bindsym Print exec scrot --quality 100 --border --exec 'notify-send Screenshot "Screenshot saved as $n"' "$HOME/Pictures/Screenshots/Screenshot-CAPE-%F_%k%M%S.png"
+bindsym Ctrl+Shift+v exec $HOME/.bin/clipster -sc
+bindsym --release Ctrl+Print exec scrot --quality 100 --border --select --exec 'notify-send Screenshot "Screenshot saved as $n"' "$HOME/Pictures/Screenshots/Screenshot-$(hostname -s)-%F_%k%M%S.png"
+bindsym Print exec scrot --quality 100 --border --exec 'notify-send Screenshot "Screenshot saved as $n"' "$HOME/Pictures/Screenshots/Screenshot-$(hostname -s)-%F_%k%M%S.png"
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
