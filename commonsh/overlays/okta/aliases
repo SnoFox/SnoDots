@@ -1,2 +1,3 @@
 alias nomy="okta-nomy-cli instances"
 alias week="date '+%Y.%W'"
+alias aws-console="okta-aws-auth-console"

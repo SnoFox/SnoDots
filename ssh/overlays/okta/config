@@ -10,10 +10,10 @@ Host *.saasure.com *.internal
     User jjohnson
     ForwardAgent yes
     ServerAliveInterval 60
-    IdentityFile ~/.ssh/%r/id_rsa
+    IdentityFile ~/.ssh/okta/%r
 
 Host *.saasure.net
     User jjohnson
     ForwardAgent yes
-    IdentityFile ~/.ssh/%r/id_rsa
+    IdentityFile ~/.ssh/okta/%r
     Port 222
