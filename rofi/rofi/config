@@ -1,0 +1,6 @@
+rofi.modi: drun,ssh,run,combi,window
+rofi.combi-modi: drun,ssh
+rofi.show: combi
+rofi.case-sensitive: false
+rofi.show-icons: true
+rofi.kb-cancel: Escape,Alt+space

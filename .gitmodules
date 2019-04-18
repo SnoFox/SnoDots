@@ -1,0 +1,3 @@
+[submodule "rofi/kaomoji-rofi"]
+	path = rofi/kaomoji-rofi
+	url = https://gitlab.com/ceda_ei/kaomoji-rofi

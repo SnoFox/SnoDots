@@ -25,10 +25,10 @@ deps = ["install_screen", "install_zsh", "install_vim"]
 deps = ["setup_commonsh", "setup_zsh", "setup_screen", "setup_dir_colors", "setup_vim", "setup_git"]
 
 [tasks.package_desktop]
-deps = ["install_i3"]
+deps = ["install_i3", "install_rofi"]
 
 [tasks.setup_desktop]
-deps = ["setup_i3"]
+deps = ["setup_i3", "setup_rofi"]
 
 [tasks.package_windows]
 
@@ -67,6 +67,10 @@ cmds = [
   ["@install", "i3"]
 ]
 
+[tasks.install_rofi]
+cmds = [
+  ["@install", "rofi", "xclip", "xdotool"]
+]
 
 #############
 # Dot setup #
@@ -187,6 +191,11 @@ links = [
 links = [
   [".config/.i3", "i3"],
   [".config/i3status", "i3status"]
+]
+
+[tasks.setup_rofi]
+links = [
+  [".config/rofi", "rofi/rofi"]
 ]
 
 ##########
