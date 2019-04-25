@@ -1,17 +1,19 @@
 # i3 config file (v4)
 set $mod Mod1
 exec --no-startup-id $HOME/.config/i3/startup.sh
-exec nitrogen --restore
+exec --no-startup-id nitrogen --restore
 exec --no-startup-id clipster -d
+exec --no-startup-id compton -b
 exec spotify
 
-set $lockcmd i3lock -f -c 06b5e9
+set $lockcmd i3lock -f -t -i $HOME/Pictures/"persona 5 crew.png"
 
 bindsym XF86Launch7 exec $lockcmd
 bindsym XF86Search exec $lockcmd
 bindsym Ctrl+Shift+v exec $HOME/.bin/clipster -sc
 bindsym --release Ctrl+Print exec scrot --quality 100 --border --select --exec 'notify-send Screenshot "Screenshot saved as $n"' "$HOME/Pictures/Screenshots/Screenshot-$(hostname -s)-%F_%k%M%S.png"
 bindsym Print exec scrot --quality 100 --border --exec 'notify-send Screenshot "Screenshot saved as $n"' "$HOME/Pictures/Screenshots/Screenshot-$(hostname -s)-%F_%k%M%S.png"
+bindsym Mod4+Print exec scrot --quality 100 --border --exec 'notify-send Screenshot "Screenshot saved as $n"' "$HOME/Pictures/Screenshots/Screenshot-$(hostname -s)-%F_%k%M%S.png" --delay 5
 bindsym XF86AudioPlay exec "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
 bindsym XF86AudioStop exec "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop"
 bindsym XF86AudioPrev exec "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
@@ -48,7 +50,7 @@ bindsym $mod+backslash split h
 bindsym $mod+minus split v
 bindsym $mod+f fullscreen toggle
 bindsym $mod+Shift+f floating toggle
-#bindsym $mod+space focus mode_toggle
+bindsym $mod+Shift+g fullscreen toggle global
 
 # move workspaces
 bindsym $mod+Shift+Left move workspace to output left
@@ -62,10 +64,10 @@ set $ws2 "2: "
 set $ws3 "3: "
 set $ws4 "4: "
 set $ws5 "5: "
-set $ws6 "6"
-set $ws7 "7"
+set $ws6 "6: "
+set $ws7 "7: "
 set $ws8 "8: "
-set $ws9 "9: "
+set $ws9 "9: "
 set $ws10 "10: "
 
 assign [class="Google-chrome"] $ws2
