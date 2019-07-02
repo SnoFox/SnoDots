@@ -1,0 +1,14 @@
+"pactl set-sink-volume @DEFAULT_SINK@ +10%"
+   XF86AudioRaiseVolume
+
+"pactl set-sink-volume @DEFAULT_SINK@ -10%"
+   XF86AudioLowerVolume
+
+"pactl set-sink-mute @DEFAULT_SINK@ toggle"
+   XF86AudioMute
+
+"/home/josh/.bin/light -A 10%"
+   XF86MonBrightnessUp
+
+"/home/josh/.bin/light -U 10%"
+   XF86MonBrightnessDown

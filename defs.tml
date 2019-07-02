@@ -25,10 +25,10 @@ deps = ["install_screen", "install_zsh", "install_vim"]
 deps = ["setup_commonsh", "setup_zsh", "setup_screen", "setup_dir_colors", "setup_vim", "setup_git"]
 
 [tasks.package_desktop]
-deps = ["install_i3", "install_rofi"]
+deps = ["install_i3", "install_plex", "install_spotify", "install_discord", "install_telegram", "install_distro-specifics"]
 
 [tasks.setup_desktop]
-deps = ["setup_i3", "setup_rofi"]
+deps = ["setup_i3"]
 
 [tasks.package_windows]
 
@@ -63,13 +63,49 @@ cmds = [
 ]
 
 [tasks.install_i3]
+deps = ["install_rofi"]
 cmds = [
-  ["@install", "i3"]
+  ["@install", "i3", "nitrogen", "arandr", "xbindkeys", "scrot"]
 ]
 
 [tasks.install_rofi]
 cmds = [
   ["@install", "rofi", "xclip", "xdotool"]
+]
+
+[tasks.install_flatpak]
+cmds = [
+  ["@install", "flatpak"]
+]
+
+[tasks.install_plex]
+deps = ["install_flatpak"]
+rejects = [["flatpak", "info", "tv.plex.PlexMediaPlayer"]]
+cmds = [
+  ["@flatpak_install", "https://knapsu.eu/data/plex/tv.plex.PlexMediaPlayer.flatpakref"]
+]
+
+[tasks.install_spotify]
+cmds = [
+  ["@cross_install", "spotify"]
+]
+
+[tasks.install_discord]
+deps = ["install_flatpak"]
+rejects = [["flatpak", "info", "com.discordapp.Discord"]]
+cmds = [
+  ["@flatpak_install", "flathub", "com.discordapp.Discord"]
+]
+
+[tasks.install_telegram]
+cmds = [
+  ["@cross_install", "telegram-desktop"]
+]
+
+# Install for H.264 codec
+[tasks.install_distro-specifics__ubuntu]
+cmds = [
+  ["@install", "ubuntu-restricted-extras"]
 ]
 
 #############
@@ -188,9 +224,11 @@ links = [
 ]
 
 [tasks.setup_i3]
+deps = ["setup_rofi"]
 links = [
-  [".config/.i3", "i3"],
-  [".config/i3status", "i3status"]
+  [".config/i3", "i3"],
+  [".config/i3status", "i3status"],
+  [".xbindkeysrc", "xbindkeys/xbindkeysrc"]
 ]
 
 [tasks.setup_rofi]
@@ -226,3 +264,22 @@ prefix = ["@install__rhel"]
 
 [macros.install__arch]
 prefix = ["sudo", "pacman", "-S", "--needed", "--noconfirm"]
+
+[macros.flatpak_install]
+prefix = ["flatpak", "install", "--assumeyes"]
+
+[macros.cross_install]
+prefix = ["echo", "== Want to install"]
+suffix = [", but I don't know how =="]
+
+[macros.cross_install__ubuntu]
+prefix = ["sudo", "snap", "install"]
+
+[macros.cross_install__rhel]
+prefix = ["@cross_install"]
+
+[macros.cross_install__centos]
+prefix = ["@install__rhel"]
+
+[macros.cross_install__fedora]
+prefix = ["@install__rhel"]
