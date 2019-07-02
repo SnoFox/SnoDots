@@ -2,6 +2,8 @@
 
 # For Cape and other Thinkpads
 xinput set-prop "TPPS/2 IBM TrackPoint" "libinput Accel Speed" -0.4
+xset dpms 0 0 0
+xset s off
 
 set -x
 screens=$(xrandr|egrep '^e?DP-(.+) connected'|wc -l)

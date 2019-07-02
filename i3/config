@@ -2,7 +2,6 @@
 set $mod Mod1
 exec --no-startup-id $HOME/.config/i3/startup.sh
 exec --no-startup-id nitrogen --restore
-exec --no-startup-id clipster -d
 exec --no-startup-id compton -b
 exec spotify
 
@@ -14,6 +13,7 @@ bindsym Ctrl+Shift+v exec $HOME/.bin/clipster -sc
 bindsym --release Ctrl+Print exec scrot --quality 100 --border --select --exec 'notify-send Screenshot "Screenshot saved as $n"' "$HOME/Pictures/Screenshots/Screenshot-$(hostname -s)-%F_%k%M%S.png"
 bindsym Print exec scrot --quality 100 --border --exec 'notify-send Screenshot "Screenshot saved as $n"' "$HOME/Pictures/Screenshots/Screenshot-$(hostname -s)-%F_%k%M%S.png"
 bindsym Mod4+Print exec scrot --quality 100 --border --exec 'notify-send Screenshot "Screenshot saved as $n"' "$HOME/Pictures/Screenshots/Screenshot-$(hostname -s)-%F_%k%M%S.png" --delay 5
+bindsym Shift+Mod4+Print exec scrot --quality 100 --border --exec 'notify-send Screenshot "Screenshot saved as $n"' "$HOME/Pictures/Screenshots/Screenshot-$(hostname -s)-%F_%k%M%S.png" --delay 5 --select
 bindsym XF86AudioPlay exec "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
 bindsym XF86AudioStop exec "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop"
 bindsym XF86AudioPrev exec "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
@@ -45,12 +45,13 @@ bindsym $mod+Shift+l move right
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
+bindsym $mod+g split h, focus down, move up, focus down
 # split types
 bindsym $mod+backslash split h
 bindsym $mod+minus split v
 bindsym $mod+f fullscreen toggle
 bindsym $mod+Shift+f floating toggle
-bindsym $mod+Shift+g fullscreen toggle global
+bindsym $mod+Shift+s sticky toggle
 
 # move workspaces
 bindsym $mod+Shift+Left move workspace to output left
@@ -123,6 +124,17 @@ bar {
     output DP-1-1
     font pango:DejaVu Sans Mono,Font Awesome 5 Pro 9
     status_command i3status
+    colors {
+        background #1c1c1c
+        statusline #ffffff
+        separator #656565
+
+        # Class             Border  BG      Text
+        focused_workspace   #888888 #1c1c1c #eaeaea
+        active_workspace    #333333 #5f676a #ffffff
+        inactive_workspace  #333333 #222222 #888888
+        urgent_workspace    #2f343a #ffc123 #ffffff
+    }
 }
 
 bar {
@@ -130,3 +142,13 @@ bar {
     font pango:DejaVu Sans Mono,Font Awesome 5 Pro 9
     status_command i3status -c $HOME/.config/i3status/small
 }
+
+client.focused          #222222 #6272a4 #ffffff #ffffff
+client.focused_inactive #333333 #222222 #ffffff #888888
+client.unfocused        #333333 #222222 #888888 #888888
+client.urgent           #222222 #ffc123 #ffffff #ffc123
+
+workspace_auto_back_and_forth no
+force_display_urgency_hint 500 ms
+popup_during_fullscreen leave_fullscreen
+focus_follows_mouse no
