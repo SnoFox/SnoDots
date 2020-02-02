@@ -18,7 +18,7 @@ endif
 " ---- General Setup ----
 set nocompatible           " Don't emulate vi's limitations
 set tabstop=8              " 4 spaces for tabs
-set shiftwidth=8           " 4 spaces for indents
+set shiftwidth=2           " 2 spaces for indents
 set smarttab               " Tab next line based on current line
 "set expandtab             " Spaces for indentation
 set autoindent             " Automatically indent next line
@@ -388,5 +388,5 @@ endif
 set t_RV=
 
 set tabstop=4
-set shiftwidth=4
+set shiftwidth=2
 call pathogen#infect()
