@@ -5,8 +5,19 @@ PATHCOLOR=''
 BOLDERRORCOLOR=''
 BLACKCOLOR=''
 ISMACOSX=1
+ISWSL=1
 if [ `uname -s` = Darwin ]; then
 	ISMACOSX=0
+fi
+
+if [ "$(uname -v)" =~ 'Microsoft' ]; then
+	ISWSL=0
+fi
+
+if [ $ISWSL == 0 ]; then
+	host=$(print -P '%m'|tr A-Z a-z)
+else
+	host=%m
 fi
 
 case "${TERM}" in
@@ -177,11 +188,11 @@ function updateprompt () {
 			stashpart="${RESETCOLOR}${GRAY}(${GREEN}${stashes}${GRAY} stashed)${RESETCOLOR}"
 		fi
 		local stats="$(git_prompt_status)"
-		PROMPT=${RESETCOLOR}'[%n@%m '"${reponame} ${branch}${YELLOW}${stats}${additional} ${RESETCOLOR}"$'%45<...<'"${repopath}"']%(?..'${BOLDERRORCOLOR}$')%(!.#.$) '${RESETCOLOR}
+		PROMPT=${RESETCOLOR}'[%n@${host} '"${reponame} ${branch}${YELLOW}${stats}${additional} ${RESETCOLOR}"$'%45<...<'"${repopath}"']%(?..'${BOLDERRORCOLOR}$')%(!.#.$) '${RESETCOLOR}
 
 		RGIT=${RESETCOLOR}${stashpart}${remotepart}
 	fi
-	PROMPT=${RESETCOLOR}'[%n@%m %45<...<%~%(?..)]%(?..'${BOLDERRORCOLOR}$')%(!.#.$) '${RESETCOLOR}
+	PROMPT=${RESETCOLOR}'[%n@${host} %45<...<%~%(?..)]%(?..'${BOLDERRORCOLOR}$')%(!.#.$) '${RESETCOLOR}
 	RPROMPT=${RESETCOLOR}${KNIFE}${RGIT}$'%1(j.'${JOBCOLOR}$'[%j].)%(?..'${ERRORCOLOR}$'[%?])'${CLOCKCOLOR}$'[%t]'${RESETCOLOR}
 	RGIT=''
 }

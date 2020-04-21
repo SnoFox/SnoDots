@@ -1,10 +1,16 @@
 # terminal titles
+if [ "$(uname -v)" =~ 'Microsoft' ]; then
+  host=$(print -P '%m'|tr A-Z a-z)
+else
+  host=%m
+fi
+
 precmd()
 {
 	updateprompt
 	local termtitle
 
-	termtitle=`print -P "%n@%m[%l]"`
+	termtitle=`print -P "%n@${host}[%l]"`
 	title zsh "$termtitle"
 }
 
@@ -16,7 +22,7 @@ preexec()
 	local termtitle
 
 	# Prepend this string to the title.
-	termtitle=`print -P "%n@%m[%l]:"`
+	termtitle=`print -P "%n@${host}[%l]:"`
 
 	case $cmd[1] in
 		fg)
