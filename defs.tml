@@ -33,7 +33,7 @@ deps = ["setup_i3"]
 [tasks.package_windows]
 
 [tasks.setup_windows]
-deps = ["setup_mintty", "setup_ssh-agent"]
+deps = ["setup_ssh-agent"]
 
 ##############
 # Installers #
@@ -48,12 +48,6 @@ cmds = [
 rejects = [["which", "zsh"]]
 cmds = [
   ["@install", "zsh"]
-]
-
-[tasks.install_conky]
-rejects = [["which", "conky"]]
-cmds = [
-  ["@install", "conky"]
 ]
 
 [tasks.install_vim]
@@ -159,11 +153,6 @@ links = [
   [".dir_colors", "dir_colors/dir_colors"]
 ]
 
-[tasks.setup_conky]
-links = [
-  [".conkyrc", "conky/conkyrc"]
-]
-
 [tasks.setup_ssh-agent]
 deps = ["setup_commonsh"]
 links = [
@@ -207,10 +196,6 @@ cmdspost = [
   ["sed", "-i", "s/z/@/", "${HOME}/.gitconfig.d/user.inc"]
 ]
 
-[tasks.setup_mintty]
-links = [
-  [".minttyrc", "mintty/minttyrc"]
-]
 
 [tasks.setup_top]
 links = [
