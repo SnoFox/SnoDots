@@ -19,7 +19,7 @@ cmds = [
 
 # Packages
 [tasks.package_base]
-deps = ["install_screen", "install_zsh", "install_vim"]
+deps = ["install_screen", "install_zsh", "install_vim", "install_kubectl"]
 
 [tasks.setup_base]
 deps = ["setup_commonsh", "setup_zsh", "setup_screen", "setup_dir_colors", "setup_vim", "setup_git"]
@@ -54,6 +54,12 @@ cmds = [
 rejects = [["which", "vim"]]
 cmds = [
   ["@install", "vim"]
+]
+
+[tasks.install_kubectl]
+rejects = [["which", "kubectl"]]
+cmds = [
+  ["bash", "${HM_SRC}/support/install-kubectl.sh"]
 ]
 
 [tasks.install_i3]
@@ -183,6 +189,7 @@ links = [
 
 [tasks.setup_git]
 deps = ["setup_ssh"]
+rejects = [["file", "${HOME}/.gitconfig.d"]]
 links = [
   [".gitconfig", "git/gitconfig"],
   [".githelpers", "git/githelpers"],
