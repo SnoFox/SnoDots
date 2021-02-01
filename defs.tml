@@ -126,12 +126,6 @@ links =  [
   [".commonsh/30-okta-rvm", "commonsh/overlays/okta/rvm"]
 ]
 
-[tasks.setup_commonsh__sno]
-deps = ["setup_commonsh__"]
-links =  [
-  [".commonsh/10_sno-docker", "commonsh/overlays/sno/docker"]
-]
-
 [tasks.setup_bash]
 deps = ["setup_commonsh"]
 links = [
