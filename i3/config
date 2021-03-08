@@ -3,17 +3,16 @@ set $mod Mod1
 exec --no-startup-id $HOME/.config/i3/startup.sh
 exec --no-startup-id nitrogen --restore
 exec --no-startup-id compton -b
-exec spotify
+#exec spotify
+exec xbindkeys
 
-set $lockcmd i3lock -f -t -i $HOME/Pictures/"persona 5 crew.png"
+set $lockcmd i3lock-fancy -t "New laptop who dis?" -- scrot -z
 
 bindsym XF86Launch7 exec $lockcmd
 bindsym XF86Search exec $lockcmd
-bindsym Ctrl+Shift+v exec $HOME/.bin/clipster -sc
-bindsym --release Ctrl+Print exec scrot --quality 100 --border --select --exec 'notify-send Screenshot "Screenshot saved as $n"' "$HOME/Pictures/Screenshots/Screenshot-$(hostname -s)-%F_%k%M%S.png"
-bindsym Print exec scrot --quality 100 --border --exec 'notify-send Screenshot "Screenshot saved as $n"' "$HOME/Pictures/Screenshots/Screenshot-$(hostname -s)-%F_%k%M%S.png"
-bindsym Mod4+Print exec scrot --quality 100 --border --exec 'notify-send Screenshot "Screenshot saved as $n"' "$HOME/Pictures/Screenshots/Screenshot-$(hostname -s)-%F_%k%M%S.png" --delay 5
-bindsym Shift+Mod4+Print exec scrot --quality 100 --border --exec 'notify-send Screenshot "Screenshot saved as $n"' "$HOME/Pictures/Screenshots/Screenshot-$(hostname -s)-%F_%k%M%S.png" --delay 5 --select
+bindsym Ctrl+Shift+v exec $HOME/.local/bin/clipster -sc
+bindsym Ctrl+Print exec ~/.local/bin/screenshot.sh --select
+bindsym Print exec ~/.local/bin/screenshot.sh
 bindsym XF86AudioPlay exec "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
 bindsym XF86AudioStop exec "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop"
 bindsym XF86AudioPrev exec "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
@@ -24,8 +23,6 @@ font pango:DejaVu Sans Mono 9
 floating_modifier $mod
 bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+q kill
-#bindsym $mod+d exec dmenu_run
-#bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 bindsym --release $mod+space exec --no-startup-id rofi -show combi -theme Arc-Dark
 
 # change focus
@@ -33,7 +30,9 @@ bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
-bindsym $mod+a focus parent
+bindsym $mod+u focus parent
+bindsym $mod+o focus child
+bindsym $mod+p focus mode_toggle
 
 # move focused window
 bindsym $mod+Shift+h move left
@@ -108,13 +107,25 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 mode "resize" {
     bindsym h resize shrink width 10 px or 10 ppt
-    bindsym j resize grow height 10 px or 10 ppt
-    bindsym k resize shrink height 10 px or 10 ppt
+    bindsym k resize grow height 10 px or 10 ppt
+    bindsym j resize shrink height 10 px or 10 ppt
     bindsym l resize grow width 10 px or 10 ppt
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
-    bindsym $mod+r mode "default"
+    bindsym $mod+shift+r mode "resize-fine"
+}
+
+mode "resize-fine" {
+    bindsym h resize shrink width 5 px or 5 ppt
+    bindsym k resize grow height 5 px or 5 ppt
+    bindsym j resize shrink height 5 px or 5 ppt
+    bindsym l resize grow width 5 px or 5 ppt
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+r mode "resize"
+    bindsym $mod+shift+r mode "default"
 }
 
 bindsym $mod+r mode "resize"
@@ -122,8 +133,10 @@ bindsym $mod+r mode "resize"
 bar {
     output eDP-1
     output DP-1-1
+    output Virtual1
     font pango:DejaVu Sans Mono,Font Awesome 5 Pro 9
     status_command i3status
+    tray_output primary
     colors {
         background #1c1c1c
         statusline #ffffff
@@ -139,6 +152,9 @@ bar {
 
 bar {
     output DP-1-2-1
+    output DP-1
+    output Virtual2
+    tray_output primary
     font pango:DejaVu Sans Mono,Font Awesome 5 Pro 9
     status_command i3status -c $HOME/.config/i3status/small
 }
