@@ -44,7 +44,9 @@ preexec()
 			title "${jobtexts[${cmd[1]#%}]% *}" "$termtitle $jobtexts[${cmd[1]#%}]"
 			;;
 		*=*)
-			shift cmd
+			if (( $#cmd != 1 )); then;
+				shift cmd
+			fi
 		;&
 		exec|sudo)
 			shift cmd
