@@ -1,6 +1,6 @@
 " vimrc
-" Current author: David Majnemer
-" Original author: Saleem Abdulrasool <compnerd@compnerd.org>
+" Current author: Josh Johnson
+" Previous authors: Saleem Abdulrasool <compnerd@compnerd.org>, David Majnemer
 " vim: set ts=3 sw=3 et nowrap:
 
 if has('multi_byte')      " Make sure we have unicode support
@@ -20,7 +20,7 @@ set nocompatible           " Don't emulate vi's limitations
 set tabstop=8              " 4 spaces for tabs
 set shiftwidth=2           " 2 spaces for indents
 set smarttab               " Tab next line based on current line
-"set expandtab             " Spaces for indentation
+set expandtab             " Spaces for indentation
 set autoindent             " Automatically indent next line
 if has('smartindent')
    set smartindent            " Indent next line based on current line
@@ -388,5 +388,17 @@ endif
 set t_RV=
 
 set tabstop=4
-set shiftwidth=2
-call pathogen#infect()
+
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" --- NERDtree ---
+map <C-n> :NERDTreeToggle<CR>
+
+"Switch between different windows by their direction`
+no <C-j> <C-w>j| "switching to below window
+no <C-k> <C-w>k| "switching to above window
+no <C-l> <C-w>l| "switching to right window
+no <C-h> <C-w>h| "switching to left window
