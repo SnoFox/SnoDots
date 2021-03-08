@@ -1,3 +1,6 @@
 [submodule "rofi/kaomoji-rofi"]
 	path = rofi/kaomoji-rofi
 	url = https://gitlab.com/ceda_ei/kaomoji-rofi
+[submodule "nerdtree"]
+	path = vim/vim/pack/nertree/start/nerdtree
+	url = https://github.com/preservim/nerdtree.git
