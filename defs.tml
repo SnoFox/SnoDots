@@ -30,6 +30,9 @@ deps = ["install_i3", "install_plex", "install_spotify", "install_discord", "ins
 [tasks.setup_desktop]
 deps = ["setup_i3"]
 
+[tasks.setup_x1c]
+deps = ["setup_udev_backlight"]
+
 [tasks.package_windows]
 
 [tasks.setup_windows]
@@ -215,6 +218,15 @@ links = [
   [".config/i3", "i3"],
   [".config/i3status", "i3status"],
   [".xbindkeysrc", "xbindkeys/xbindkeysrc"]
+]
+
+
+[tasks.setup_udev_backlight]
+links = [
+  ["udev/backlight.rules", "/etc/udev/rules.d/backlight.rules"]
+]
+cmds = [
+  ["/usr/sbin/usermod", "-aG", "video", "josh"]
 ]
 
 [tasks.setup_rofi]
