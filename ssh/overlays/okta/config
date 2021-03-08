@@ -1,19 +1,30 @@
 Host *.aue1t.internal
+  StrictHostKeyChecking no
   ProxyCommand "/usr/bin/sft" proxycommand --team okta-trex %h
   UserKnownHostsFile ~/.local/share/ScaleFT/proxycommand_known_host
+  ForwardAgent yes
 
 Host *.aue1s.internal *.aec1s.internal
+  StrictHostKeyChecking no
   ProxyCommand "/usr/bin/sft" proxycommand --team okta-preview %h
   UserKnownHostsFile ~/.local/share/ScaleFT/proxycommand_known_host
+  ForwardAgent yes
+
+Host *.aue1p.internal *.aue2p.internal *.auw2p.internal *.aec1p.internal *.aew1p.internal *.aue2-ok11.internal *.auw2-ok11.internal *.aew1-ok9.internal *.aec1-ok9.internal *.aas1-ok8.internal *.aas2-ok8.internal
+  StrictHostKeyChecking no
+  ProxyCommand "/usr/bin/sft" proxycommand --team okta-prod %h
+  UserKnownHostsFile ~/.local/share/ScaleFT/proxycommand_known_host
+  ForwardAgent yes
+
+Host *.aue1d.internal *.aue2d.internal *.auw2d.internal *.aec1d.internal *.aew1d.internal *.aas1d.internal *.aas2d.internal
+  StrictHostKeyChecking no
+  ProxyCommand "/usr/bin/sft" proxycommand --team okta-dmz %h
+  UserKnownHostsFile ~/.local/share/ScaleFT/proxycommand_known_host
+  ForwardAgent yes
 
 Host *.saasure.com *.internal
-    User jjohnson
-    ForwardAgent yes
-    ServerAliveInterval 60
-    IdentityFile ~/.ssh/okta/%r
-
-Host *.saasure.net
-    User jjohnson
-    ForwardAgent yes
-    IdentityFile ~/.ssh/okta/%r
-    Port 222
+  StrictHostKeyChecking no
+  User jjohnson
+  ForwardAgent yes
+  ServerAliveInterval 60
+  IdentityFile ~/.ssh/okta/%r
