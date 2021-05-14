@@ -186,7 +186,7 @@ links = [
 
 [tasks.setup_git]
 deps = ["setup_ssh"]
-rejects = [["file", "${HOME}/.gitconfig.d"]]
+rejects = [["test", "-e", "${HOME}/.gitconfig.d"]]
 links = [
   [".gitconfig", "git/gitconfig"],
   [".githelpers", "git/githelpers"],
