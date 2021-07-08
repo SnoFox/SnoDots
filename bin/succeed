@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+function backoff {
+  time=$((count**2))
+  if [ $time -lt 30 ]; then
+    echo $time
+  else
+    echo 30
+  fi
+}
+
+count=0
+while true; do
+  $@
+  status=$?
+  if [ $status -eq 0 ]; then
+    break
+  fi
+  ((count++))
+  printf "Failed, exited ${status}. Retry #${count}"
+  sleep=$(backoff)
+  if [ $sleep -gt 10 ]; then
+    printf " in ${sleep}s...\n"
+  else
+    printf "...\n"
+  fi
+  sleep $(backoff)
+done
+
+if [ $count -gt 0 ]; then
+  echo "Succeeded after ${count} attempts"
+fi
+
+trap "echo Interrupted after ${count} attempts" SIGINT

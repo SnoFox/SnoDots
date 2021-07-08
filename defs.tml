@@ -118,7 +118,8 @@ cmds = [
 # Group the shells together
 [tasks.setup_commonsh]
 links = [
-  [".commonsh", "commonsh/commonsh"]
+  [".commonsh", "commonsh/commonsh"],
+  [".local/bin", "bin"]
 ]
 
 [tasks.setup_commonsh__okta]
