@@ -93,3 +93,5 @@ zstyle ':completion:*:scp:*' ignore-line yes
 zstyle ':completion:*:diff:*' ignore-line yes
 zstyle ':completion:*:kill:*' ignore-line yes
 
+# Kubernetes auto-completion
+[[ $commands[kubectl] ]] && source <(kubectl completion zsh)

@@ -47,3 +47,6 @@
 
 [push]
 	default = current
+[core]
+	fileMode = false
+	autocrlf = input
