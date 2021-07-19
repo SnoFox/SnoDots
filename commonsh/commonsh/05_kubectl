@@ -1,0 +1,12 @@
+#!/bin/sh
+
+has_kubectl() {
+  which kubectl &> /dev/null
+  return $?
+}
+
+get_kube_context() {
+  if [ has_kubectl ]; then
+    kubectl config current-context
+  fi
+}
