@@ -22,16 +22,13 @@ cmds = [
 deps = ["install_screen", "install_zsh", "install_vim", "install_kubectl"]
 
 [tasks.setup_base]
-deps = ["setup_commonsh", "setup_zsh", "setup_screen", "setup_dir_colors", "setup_vim", "setup_git"]
+deps = ["setup_commonsh", "setup_zsh", "setup_screen", "setup_dir_colors", "setup_vim", "setup_git", "setup_ssh"]
 
 [tasks.package_desktop]
-deps = ["install_i3", "install_plex", "install_spotify", "install_discord", "install_telegram", "install_distro-specifics"]
+deps = ["install_plex", "install_spotify", "install_discord", "install_telegram", "install_distro-specifics"]
 
 [tasks.setup_desktop]
-deps = ["setup_i3"]
-
-[tasks.setup_x1c]
-deps = ["setup_udev_backlight"]
+deps = [""]
 
 [tasks.package_windows]
 
@@ -62,6 +59,7 @@ cmds = [
 [tasks.install_kubectl]
 rejects = [["which", "kubectl"]]
 cmds = [
+  ["@install", "curl"],
   ["bash", "${HM_SRC}/support/install-kubectl.sh"]
 ]
 
@@ -93,6 +91,11 @@ cmds = [
   ["@cross_install", "spotify"]
 ]
 
+[tasks.install_slack]
+cmds = [
+  ["@cross_install", "--classic", "slack"]
+]
+
 [tasks.install_discord]
 deps = ["install_flatpak"]
 rejects = [["flatpak", "info", "com.discordapp.Discord"]]
@@ -115,11 +118,10 @@ cmds = [
 # Dot setup #
 #############
 
-# Group the shells together
 [tasks.setup_commonsh]
 links = [
   [".commonsh", "commonsh/commonsh"],
-  [".local/bin", "bin"]
+  [".local/bin/succeed", "bin/succeed"]
 ]
 
 [tasks.setup_commonsh__okta]
@@ -187,7 +189,7 @@ links = [
 
 [tasks.setup_git]
 deps = ["setup_ssh"]
-rejects = [["test", "-e", "${HOME}/.gitconfig.d"]]
+rejects = [["test", "-d", "${HOME}/.gitconfig.d"]]
 links = [
   [".gitconfig", "git/gitconfig"],
   [".githelpers", "git/githelpers"],
