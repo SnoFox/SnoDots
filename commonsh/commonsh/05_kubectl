@@ -7,6 +7,6 @@ has_kubectl() {
 
 get_kube_context() {
   if [ has_kubectl ]; then
-    kubectl config current-context
+    kubectl config current-context 2> /dev/null
   fi
 }
