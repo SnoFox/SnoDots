@@ -91,7 +91,7 @@ if command -v ack-grep >/dev/null 2>&1 ; then
 	alias ack=ack-grep
 fi
 
-alias rm='rm -ir'
+alias rm='rm -Ir'
 
 alias df='df -h'
 alias du='du -h'

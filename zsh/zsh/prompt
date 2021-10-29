@@ -130,7 +130,7 @@ function updateprompt () {
 			KUBECONTEXT=${KUBECOLOR}'<'${KUBECONTEXT}'>'
 		fi
 	fi
-	if haveknife; then
+	if haveknife && $USE_KNIFE; then
 		local KNIFE=${KNIFECOLOR}'<'$(get_knife_block)'>'
 	fi
 	if havegit ; then
