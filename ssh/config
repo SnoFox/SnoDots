@@ -5,6 +5,6 @@ ConnectTimeout 30
 
 Include overlays/*
 
-Host *.snofox.net *.fox.ninja
+Host *.snofox.net *.fox.ninja *.t.sans.zone
     ForwardAgent yes
     User josh
