@@ -96,6 +96,19 @@ list_overlays() {
 	awk -F_ '/^\[tasks\.setup_.+__.+]/ { print substr($4, 1, length($4)-1) }' $DEFSFILE|sort|uniq
 }
 
+system_report() {
+	find_os
+	find_arch
+	find_exe_suffix
+	cat <<- EOM
+	  Your OS: $OS
+	  Your kernel: $KERNEL
+	  Your architecture: $ARCH
+	  Your executable suffix: $SUFFIX
+	  This means we want to use: homemaker_${KERNEL}_${ARCH}${SUFFIX}
+	EOM
+}
+
 verbose_log() {
 	if [ $VERBOSE -eq 1 ]; then
 		echo $@
@@ -113,6 +126,7 @@ One of:
 	-l	List packages
 	-L	List overlays
 	-o	Set an overlay for the configs we lay down (default: $OVERLAY)
+	-r	Report OS/architecture
 	-s	Setup dotfiles
 	-v	Verbose output
 HELP
@@ -123,7 +137,7 @@ DRY=0
 VERBOSE=0
 PACKAGES=()
 OVERLAY="sno"
-while getopts ":dhi:Llo:sv" opts; do
+while getopts ":dhi:Llo:rsv" opts; do
 	case $opts in
 		d)
 			DRY=1
@@ -145,6 +159,10 @@ while getopts ":dhi:Llo:sv" opts; do
 			;;
 		o)
 			OVERLAY=$OPTARG
+			;;
+		r)
+			system_report
+			exit 0
 			;;
 		s)
 			# Setup dotfiles w/o install

@@ -1,6 +1,3 @@
-if [ $(uname -s) == "Cygwin" ]; then
-	ps|grep /usr/bin/ssh-agent$ > /dev/null || ssh-agent | sed 's/^echo.*//' > ${HOME}/.ssh/env
-	source ${HOME}/.ssh/env
-fi
+eval ``keychain --eval --agents ssh id_rsa
 
 # vim: set syntax=sh :
