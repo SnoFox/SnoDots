@@ -31,9 +31,10 @@ deps = ["install_plex", "install_spotify", "install_discord", "install_telegram"
 deps = [""]
 
 [tasks.package_windows]
+deps = ["install_keychain"]
 
 [tasks.setup_windows]
-deps = ["setup_ssh-agent"]
+deps = ["setup_ssh-agent", "setup_docker"]
 
 ##############
 # Installers #
@@ -58,6 +59,7 @@ cmds = [
 
 [tasks.install_kubectl]
 rejects = [["which", "kubectl"]]
+deps = ["setup_commonsh"]
 cmds = [
   ["@install", "curl"],
   ["bash", "${HM_SRC}/support/install-kubectl.sh"]
@@ -114,6 +116,12 @@ cmds = [
   ["@install", "ubuntu-restricted-extras"]
 ]
 
+[tasks.install_keychain]
+rejects = [["which", "keychain"]]
+cmds = [
+  ["@install", "keychain"]
+]
+
 #############
 # Dot setup #
 #############
@@ -121,7 +129,7 @@ cmds = [
 [tasks.setup_commonsh]
 links = [
   [".commonsh", "commonsh/commonsh"],
-  [".local/bin/succeed", "bin/succeed"]
+  [".local/bin", "bin"]
 ]
 
 [tasks.setup_commonsh__okta]
@@ -162,7 +170,13 @@ links = [
 [tasks.setup_ssh-agent]
 deps = ["setup_commonsh"]
 links = [
-  [".commonssh/50-windows-ssh_agent", "ssh-agent/windows-ssh_agent"]
+  [".commonsh/50-windows-ssh_agent", "ssh-agent/windows-ssh_agent"]
+]
+
+[tasks.setup_docker]
+deps = ["setup_commonsh"]
+links = [
+  [".commonsh/20-docker-host", "docker/extras/wsl-docker-desktop.sh"]
 ]
 
 [tasks.setup_screen]
