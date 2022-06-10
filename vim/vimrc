@@ -52,7 +52,10 @@ set diffopt+=iwhite
 
 " ---- Filetypes ----
 if has('syntax')
-   syntax on
+  try
+     :syntax on
+  catch
+  endtry
 endif
 
 if has('eval')
