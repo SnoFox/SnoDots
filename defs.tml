@@ -18,11 +18,17 @@ cmds = [
 ]
 
 # Packages
+[tasks.package_minimal]
+deps = ["install_zsh", "install_vim"]
+
+[tasks.setup_minimal]
+deps = ["setup_commonsh", "setup_zsh", "setup_vim", "setup_ssh"]
+
 [tasks.package_base]
-deps = ["install_screen", "install_zsh", "install_vim", "install_kubectl"]
+deps = ["install_screen", "install_kubectl", "package_minimal"]
 
 [tasks.setup_base]
-deps = ["setup_commonsh", "setup_zsh", "setup_screen", "setup_dir_colors", "setup_vim", "setup_git", "setup_ssh"]
+deps = ["setup_screen", "setup_dir_colors", "setup_vim", "setup_git", "setup_minimal"]
 
 [tasks.package_desktop]
 deps = ["install_plex", "install_spotify", "install_discord", "install_telegram", "install_distro-specifics"]

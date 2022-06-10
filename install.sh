@@ -36,6 +36,7 @@ find_os() {
 		freebsd)
 			KERNEL="freebsd"
 			OS="freebsd"
+			;;
 		*)
 			OS="unknown"
 			;;
@@ -54,7 +55,7 @@ find_arch() {
 			ARCH="arm"
 			;;
 		*)
-			ARCH="unknown"
+			ARCH=$(uname -m)
 			;;
 	esac
 }
