@@ -33,6 +33,9 @@ find_os() {
 			KERNEL="sunos"
 			OS="sunos"
 			;;
+		freebsd)
+			KERNEL="freebsd"
+			OS="freebsd"
 		*)
 			OS="unknown"
 			;;
