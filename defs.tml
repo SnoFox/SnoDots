@@ -59,6 +59,7 @@ cmds = [
 
 [tasks.install_kubectl]
 rejects = [["which", "kubectl"]]
+deps = ["setup_commonsh"]
 cmds = [
   ["@install", "curl"],
   ["bash", "${HM_SRC}/support/install-kubectl.sh"]
