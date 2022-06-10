@@ -4,10 +4,11 @@ HOSTCOLOR=''
 PATHCOLOR=''
 BOLDERRORCOLOR=''
 BLACKCOLOR=''
-ISMACOSX=1
+HAS_READLINK=1
 ISWSL=1
-if [ `uname -s` = Darwin ]; then
-	ISMACOSX=0
+KERNEL=`uname -s`
+if [ "$KERNEL" = Darwin -o "$KERNEL" = FreeBSD ]; then
+	HAS_READLINK=0
 fi
 
 if [ "$(uname -v)" =~ 'Microsoft' ]; then
@@ -135,10 +136,10 @@ function updateprompt () {
 	fi
 	if havegit ; then
 		local gitdir=""
-		if [ $ISMACOSX -eq 1 ]; then
+		if [ $HAS_READLINK -eq 1 ]; then
 			gitdir="$(readlink -m $(git rev-parse --git-dir 2>/dev/null))"
 		else
-			gitdir="$(python -c 'import os,sys;print os.path.realpath(sys.argv[1])' $(git rev-parse --git-dir 2>/dev/null))"
+			gitdir="$(python -c 'import os,sys;print(os.path.realpath(sys.argv[1]))' $(git rev-parse --git-dir 2>/dev/null))"
 		fi
 		local repodir="$(dirname "${gitdir}")"
 		local reponame="$(basename "${repodir}")"
