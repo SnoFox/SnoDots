@@ -169,13 +169,13 @@ links = [
 [tasks.setup_ssh-agent]
 deps = ["setup_commonsh"]
 links = [
-  [".commonssh/50-windows-ssh_agent", "ssh-agent/windows-ssh_agent"]
+  [".commonsh/50-windows-ssh_agent", "ssh-agent/windows-ssh_agent"]
 ]
 
 [tasks.setup_docker]
 deps = ["setup_commonsh"]
 links = [
-  [".commonssh/20-docker-host", "docker/extras/wsl-docker-desktop.sh"]
+  [".commonsh/20-docker-host", "docker/extras/wsl-docker-desktop.sh"]
 ]
 
 [tasks.setup_screen]
