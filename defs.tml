@@ -19,7 +19,7 @@ cmds = [
 
 # Packages
 [tasks.package_minimal]
-deps = ["install_zsh", "install_vim"]
+deps = ["install_zsh", "install_vim", "install_zellij"]
 
 [tasks.setup_minimal]
 deps = ["setup_commonsh", "setup_zsh", "setup_vim", "setup_ssh"]
@@ -69,6 +69,14 @@ deps = ["setup_commonsh"]
 cmds = [
   ["@install", "curl"],
   ["bash", "${HM_SRC}/support/install-kubectl.sh"]
+]
+
+[tasks.install_zellij]
+rejects = [["which", "zellij"]]
+deps = ["setup_commonsh"]
+cmds = [
+  ["@install", "curl"],
+  ["bash", "${HM_SRC}/support/install-zellij.sh"]
 ]
 
 [tasks.install_i3]
@@ -165,7 +173,8 @@ links = [
 deps = ["setup_commonsh"]
 links = [
   [".zshrc", "zsh/zshrc"],
-  [".zsh", "zsh/zsh"]
+  [".zsh", "zsh/zsh"],
+  [".powerlevel10k", "zsh/powerlevel10k"]
 ]
 
 [tasks.setup_dir_colors]

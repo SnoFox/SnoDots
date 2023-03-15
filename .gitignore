@@ -8,3 +8,4 @@ ssh/known_hosts
 zsh/.history
 conkyrc
 commonsh/commonsh/??-okta-*
+bin/*

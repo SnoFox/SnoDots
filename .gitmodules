@@ -4,3 +4,6 @@
 [submodule "nerdtree"]
 	path = vim/vim/pack/nertree/start/nerdtree
 	url = https://github.com/preservim/nerdtree.git
+[submodule "powerlevel10k"]
+	path = zsh/powerlevel10k
+	url = https://github.com/romkatv/powerlevel10k.git

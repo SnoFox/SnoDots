@@ -52,3 +52,5 @@ fi
 
 # Added by serverless binary installer
 export PATH="$HOME/.serverless/bin:$PATH"
+
+source ~/.powerlevel10k/powerlevel10k.zsh-theme
